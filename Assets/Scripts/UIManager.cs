@@ -17,15 +17,16 @@ public class UIManager : MonoBehaviour
     bool inventoryUIEnabled = false;
 
     [SerializeField]
-    private TextMeshProUGUI daysSurvivedText, pauseText;
-    
-    
+    private TextMeshProUGUI deathDaysSurvivedText,daysSurvivedText, pauseText;
+
     //private Text daysSurvivedText, pauseText;
     private int daysSurvived;
 
+  
     private void Start()
     {
         daysSurvivedText.text = " Days Survived" + daysSurvived;
+        deathDaysSurvivedText.text = " Days Survived" + daysSurvived;
         StartCoroutine(CountTime());
     }
 
@@ -54,6 +55,7 @@ public class UIManager : MonoBehaviour
         yield return new WaitForSeconds(0.6f);
         daysSurvived++;
         daysSurvivedText.text = daysSurvived + " days";
+        deathDaysSurvivedText.text = daysSurvived + " days";
         StartCoroutine(CountTime());
     }
     public void OnReloadSceneButton()
@@ -70,6 +72,7 @@ public class UIManager : MonoBehaviour
     {
         menuUI.SetActive(false);
         pauseMenu.SetActive(false);
+        deathMenu.SetActive(false);
     }
     public void ResumeGame()
     {
@@ -85,14 +88,14 @@ public class UIManager : MonoBehaviour
     }
     private void OnEnable()
     {
-        //for future utility. need 2 connect with player died method somewhere
+        //for future utility
         //PlayerDied.endGame += PlayerDiedEndGame;
     }
     private void OnDisable()
     {
         //PlayerDied.endGame -= PlayerDiedEndGame;
     }
-    void PlayerDiedEndGame()
+    public void PlayerDiedEndGame()
     {
         pauseText.text = "You Died";
         deathMenu.SetActive(true);

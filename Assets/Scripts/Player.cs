@@ -15,6 +15,8 @@ public class Player : MonoBehaviour
     public Animator PlayerAnim;
     float RotationSpeed = 10.0f;
     float PlayerSpeed = 5f;
+    public delegate void EndGame();
+    public static event EndGame endGame;
 
     [SerializeField]
     GameObject MainPlayer;
@@ -31,6 +33,12 @@ public class Player : MonoBehaviour
     float AttackTimer = 1.0f;
     //Player Inventory
     public InventorySO playerInventory;
+
+    private UIManager manager;
+    private void Awake()
+    {
+        manager = GameObject.FindObjectOfType<UIManager>();
+    }
     void Start()
     {
         //LookTarget = Input.mousePosition
@@ -193,7 +201,7 @@ public class Player : MonoBehaviour
             Debug.Log(PlayerLife);
             if (PlayerLife <= 0)
             {
-                Destroy(gameObject);
+                PlayerDiedEndGame();
             }
         }
         else if (other.gameObject.CompareTag("MeleeEnemy"))
@@ -202,7 +210,7 @@ public class Player : MonoBehaviour
             Debug.Log(PlayerLife);
             if (PlayerLife <= 0)
             {
-                Destroy(gameObject);
+                PlayerDiedEndGame();
             }
         }
     }
@@ -269,6 +277,16 @@ public class Player : MonoBehaviour
             return true;
         }
         return false;
+    }
+    void PlayerDiedEndGame()
+    {
+        if (endGame != null)
+        {
+            endGame();
+        }
+        manager.PlayerDiedEndGame();
+        Destroy(gameObject);
+
     }
 
 }
