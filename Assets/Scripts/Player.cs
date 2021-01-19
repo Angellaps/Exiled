@@ -2,15 +2,17 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Player : MonoBehaviour {
+public class Player : MonoBehaviour
+{
     public List<GameObject> interactablesInRange = new List<GameObject>();
+    public List<GameObject> consumablesInRange = new List<GameObject>();
     List<GameObject> enemiesInRange = new List<GameObject>();
     [SerializeField]
     List<GameObject> enemiesInFront = new List<GameObject>();
     public float PlayerDamage = 10.0f;
     [SerializeField]
     Collider PlayerCol;
-    Animator PlayerAnim;
+    public Animator PlayerAnim;
     float RotationSpeed = 10.0f;
     float PlayerSpeed = 5f;
 
@@ -25,53 +27,61 @@ public class Player : MonoBehaviour {
     public float PlayerLife;
     float PlayerSanity = 100f;
     float PlayerHunger;
-    float PlayerThirst = 100f;
+    float PlayerThirst;
     float AttackTimer = 1.0f;
     //Player Inventory
     public InventorySO playerInventory;
-    void Start() {
+    void Start()
+    {
         //LookTarget = Input.mousePosition
         PlayerAnim = GetComponent<Animator>();
         PlayerLife = 100f;
     }
 
-    private void Update() {
+    private void Update()
+    {
         //if (PlayerLife<=0)
         //{
         //    Destroy(gameObject);
         //}
         AttackTimer += Time.deltaTime;
-        StatusSystem(PlayerHunger);
+        StatusSystem(PlayerHunger, PlayerThirst);
         PlayerMovement();
         LeftClickAction();
         //RightClickAction();
-        GatherResources();
+        //GatherResources();
         //StatusSystem();
     }
 
-    void PlayerMovement() {
+    void PlayerMovement()
+    {
         float XDir = Input.GetAxis("Horizontal");
         float ZDir = Input.GetAxis("Vertical");
         Vector3 MoveDir = new Vector3(XDir, 0.0f, ZDir);
         transform.position += MoveDir * PlayerSpeed * Time.deltaTime;
-        if (MoveDir != Vector3.zero) {
+        if (MoveDir != Vector3.zero)
+        {
             transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(MoveDir), RotationSpeed * Time.deltaTime);
         }
 
-        if (Input.GetAxis("Horizontal") != 0 || Input.GetAxis("Vertical") != 0 && PlayerSpeed != 0) {
+        if (Input.GetAxis("Horizontal") != 0 || Input.GetAxis("Vertical") != 0 && PlayerSpeed != 0)
+        {
             PlayerAnim.SetBool("IsWalking", true);
         }
-        else {
+        else
+        {
             PlayerAnim.SetBool("IsWalking", false);
         }
     }
 
 
-    void LeftClickAction() {
+    void LeftClickAction()
+    {
 
         //TO DO: Move this to the AXE Scriptable object's left click
 
-        if (Input.GetMouseButtonDown(0) && AttackTimer >= 1.0f) {
+        if (Input.GetMouseButtonDown(0) && AttackTimer >= 1.0f)
+        {
 
             //LookAtPointOfInterest();
             //PlayerSpeed = 0f;
@@ -82,9 +92,11 @@ public class Player : MonoBehaviour {
             PlayerAnim.SetTrigger("Attack");
             Ray ray = cam.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
-            if (Physics.Raycast(ray, out hit, 100)) {
+            if (Physics.Raycast(ray, out hit, 100))
+            {
                 GameObject hitObject = hit.transform.gameObject;
-                if (hitObject.CompareTag("Interactable") && InteractableRangeCheck(hitObject)) {
+                if (hitObject.CompareTag("Interactable") && InteractableRangeCheck(hitObject))
+                {
                     transform.LookAt(hitObject.transform);
                     hitObject.GetComponent<Interactables>().GenerateLoot();
                 }
@@ -94,105 +106,169 @@ public class Player : MonoBehaviour {
                 }
             }
             ///!!!! REWORK ENEMY SCRIPTS TO HAVE A UNIVERSAL TAKE DAMAGE METHOD
-            foreach(GameObject enemy in enemiesInFront) {
+            foreach (GameObject enemy in enemiesInFront)
+            {
                 transform.LookAt(hit.transform);
                 //enemy.TakeDamage();
             }
 
         }
-        else {
+        else
+        {
             PlayerAnim.SetBool("IsAttacking", false);
-            if (AttackTimer >= 1.0f) {
+            if (AttackTimer >= 1.0f)
+            {
                 PlayerSpeed = 5f;
             }
         }
     }
     //Delay the destruction of Interactable to line up with the animation WIP
-    IEnumerator WaitAndDestroy(GameObject obj, float time) {
+    IEnumerator WaitAndDestroy(GameObject obj, float time)
+    {
         // suspend execution for 'time' seconds
         yield return new WaitForSeconds(time);
         Destroy(obj);
     }
 
-    public void StatusSystem(float hunger) {
+    public void StatusSystem(float hunger, float thirst)
+    {
         PlayerHunger = hunger;
+        PlayerThirst = thirst;
         //Debug.Log(PlayerHunger);
         //Calculate player status such as Life , Hunger , Water , Sanity etc.
     }
-    void GatherResources() {
-        if (Input.GetKeyDown(KeyCode.E)) {
+
+
+    void GatherResources()
+    {
+        if (Input.GetKeyDown(KeyCode.F))
+        {
+            //transform.LookAt(hitObject.transform);
             PlayerAnim.SetBool("IsGathering", true);
+            Debug.Log("+20");
+            PlayerHunger += 20.0f;
         }
-        else {
+        //Ray ray = cam.ScreenPointToRay(Input.mousePosition);
+        //RaycastHit hit;
+        /*if (Physics.Raycast(ray, out hit, 100))
+        {
+            GameObject hitObject = hit.transform.gameObject;
+            if (hitObject.CompareTag("Consumable") && ConsumableRangeCheck(hitObject))
+            {
+                transform.LookAt(hitObject.transform);
+                PlayerAnim.SetBool("IsGathering", true);
+                PlayerHunger += 20.0f;
+                //TODO : specific interactions with specific items, food interface needs 2 be done
+
+            }
+        }*/
+        else
+        {
             PlayerAnim.SetBool("IsGathering", false);
         }
+
     }
 
-    public void OnTriggerEnter(Collider other) {
+    public void OnTriggerEnter(Collider other)
+    {
         //Add Interactables and enemies in range (vacuum sphere) into lists
         //!!! TO DO: on enemy death, remove it from the list!!!
-        if (other.CompareTag("Interactable")) {
+        if (other.CompareTag("Interactable"))
+        {
             interactablesInRange.Add(other.gameObject);
-        }        
-        if (other.CompareTag("MeleeEnemy")) {
-            enemiesInRange.Add(other.gameObject);            
-        }   
+        }
+        if (other.CompareTag("MeleeEnemy"))
+        {
+            enemiesInRange.Add(other.gameObject);
+        }
+        if (other.CompareTag("Consumable"))
+        {
+            consumablesInRange.Add(other.gameObject);
+        }
 
         //???????????? afta edo kato tha figoun se dika tous scripts i se scripts twn enemies    
-        if (other.gameObject.CompareTag("ThrownRock")) {
+        if (other.gameObject.CompareTag("ThrownRock"))
+        {
             RangedTakeDamage();
             Debug.Log(PlayerLife);
-            if (PlayerLife <= 0) {
+            if (PlayerLife <= 0)
+            {
                 Destroy(gameObject);
             }
         }
-        else if (other.gameObject.CompareTag("MeleeEnemy")) {
+        else if (other.gameObject.CompareTag("MeleeEnemy"))
+        {
             MeleeTakeDamage();
             Debug.Log(PlayerLife);
-            if (PlayerLife <= 0) {
+            if (PlayerLife <= 0)
+            {
                 Destroy(gameObject);
             }
         }
     }
 
-    public void OnTriggerExit(Collider other) {
+    public void OnTriggerExit(Collider other)
+    {
 
-        if (other.CompareTag("Interactable")) {
+        if (other.CompareTag("Interactable"))
+        {
             interactablesInRange.Remove(other.gameObject);
         }
 
-        if (other.CompareTag("MeleeEnemy")) {
-            enemiesInRange.Remove(other.gameObject);            
+        if (other.CompareTag("MeleeEnemy"))
+        {
+            enemiesInRange.Remove(other.gameObject);
+        }
+        if (other.CompareTag("Consumable"))
+        {
+            consumablesInRange.Remove(other.gameObject);
         }
     }
 
 
-    public void RangedTakeDamage() {
+    public void RangedTakeDamage()
+    {
         PlayerLife -= RangedEnemy.damage;
     }
-    public void MeleeTakeDamage() {
+    public void MeleeTakeDamage()
+    {
         PlayerLife -= MeleeEnemy.damage;
     }
-    private void OnApplicationQuit() {
+    private void OnApplicationQuit()
+    {
         playerInventory.InventoryContainer.Clear();
     }
 
+
     //Returns all the enemies in front of the player (180 degrees)
-    public List<GameObject> EnemiesInFront() {
-         
-        foreach(GameObject enemy in enemiesInRange) {
-            if((transform.InverseTransformPoint(enemy.transform.position).z) > 0.0f) {
+    public List<GameObject> EnemiesInFront()
+    {
+
+        foreach (GameObject enemy in enemiesInRange)
+        {
+            if ((transform.InverseTransformPoint(enemy.transform.position).z) > 0.0f)
+            {
                 enemiesInFront.Add(enemy);
-            }            
+            }
         }
         return enemiesInFront;
     }
 
-    public bool InteractableRangeCheck(GameObject interactable) {
-        if (interactablesInRange.Contains(interactable)) {
+    public bool InteractableRangeCheck(GameObject interactable)
+    {
+        if (interactablesInRange.Contains(interactable))
+        {
             return true;
         }
         return false;
     }
-    
+    public bool ConsumableRangeCheck(GameObject consumable)
+    {
+        if (consumablesInRange.Contains(consumable))
+        {
+            return true;
+        }
+        return false;
+    }
+
 }
