@@ -124,8 +124,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 41d6d0ac767a3da4787b14f5a726864c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  item: {fileID: 0}
-  amount: 0
+  item: {fileID: 11400000, guid: 96ccccf61285e6348a3c83a1f3c44619, type: 2}
+  amount: 10
 --- !u!54 &3434782778065341868
 Rigidbody:
   m_ObjectHideFlags: 0

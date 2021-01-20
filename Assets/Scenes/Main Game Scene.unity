@@ -1157,7 +1157,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 117219487}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 122129241}
+        m_MethodName: OnCraftButton
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &117219487
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1206,6 +1217,7 @@ GameObject:
   - component: {fileID: 122129238}
   - component: {fileID: 122129240}
   - component: {fileID: 122129239}
+  - component: {fileID: 122129241}
   m_Layer: 5
   m_Name: ForgeUI
   m_TagString: Untagged
@@ -1271,6 +1283,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 122129237}
   m_CullTransparentMesh: 0
+--- !u!114 &122129241
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 122129237}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d488400cc9a427344b8ec35130195c85, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerInventory: {fileID: 11400000, guid: 9b164f4267ebb0b4b9a345c3d6bed4b8, type: 2}
+  hammerRecipe: {fileID: 11400000, guid: 2ddd06d4d4bd83c428348286b4c699c3, type: 2}
 --- !u!1 &124119143
 GameObject:
   m_ObjectHideFlags: 0

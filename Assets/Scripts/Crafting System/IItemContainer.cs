@@ -1,9 +1,12 @@
-﻿public interface IItemContainer {
+﻿public interface IItemContainer
+{
 
-    bool ContainsItem(Item item);
-    bool RemoveItem(Item item);
-    bool AddItem(Item item);
-    bool isFull();
-    int ItemCount(Item item);
-    
+    //bool ContainsItem(ItemSO item);
+    bool RemoveItem(ItemSO item);
+    bool AddItem(ItemSO item, int amount);
+    //bool isFull();
+    int ItemCount(ItemSO item);
+
+
+
 }
