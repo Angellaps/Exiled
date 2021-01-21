@@ -60,9 +60,9 @@ public class EnemyRangedScript : MonoBehaviour
         if (PlayerInAttRange && PlayerInRange) AttackPlayer();
     }
 
-    private void Patroling()
+    public void Patroling()
     {
-        EnemyAnimRanged.SetBool("Walk Forward", true);
+       // EnemyAnimRanged.SetBool("Walk Forward", true);
         if (!PatrolPointSet) SearchWalkPoint();
 
         if (PatrolPointSet)
@@ -74,7 +74,7 @@ public class EnemyRangedScript : MonoBehaviour
         if (CalcDistancetoPatrolPoint.magnitude < 1f)
             PatrolPointSet = false;
     }
-    private void SearchWalkPoint()
+    public void SearchWalkPoint()
     {
         //Make enemy find random patrol points around him
         float ZAxisMove = Random.Range(-PatrolPointRange, PatrolPointRange);
@@ -92,10 +92,10 @@ public class EnemyRangedScript : MonoBehaviour
         EnemyAgent.SetDestination(PlayerCharacter.position);
     }
 
-    private void AttackPlayer()
+    public void AttackPlayer()
     {
-        EnemyAnimRanged.SetBool("Walk Forward", false);
-        EnemyAnimRanged.SetBool("Cast Spell", true);
+       // EnemyAnimRanged.SetBool("Walk Forward", false);
+       // EnemyAnimRanged.SetBool("Cast Spell", true);
         //Make enemy stanionary to attack
         EnemyAgent.SetDestination(EnemyAgent.transform.position);
 

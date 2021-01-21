@@ -116,8 +116,13 @@ public class Player : MonoBehaviour
             ///!!!! REWORK ENEMY SCRIPTS TO HAVE A UNIVERSAL TAKE DAMAGE METHOD
             foreach (GameObject enemy in enemiesInFront)
             {
-                transform.LookAt(hit.transform);
-                //enemy.TakeDamage();
+                transform.LookAt(hit.transform); 
+                if (enemy.GetComponent<EnemyMeleeAI>()!=null)
+                {
+                    Debug.Log("I dealt damage");
+                    enemy.GetComponent<EnemyMeleeAI>().TakeDamage();
+                }
+                
             }
 
         }
@@ -195,24 +200,24 @@ public class Player : MonoBehaviour
         }
 
         //???????????? afta edo kato tha figoun se dika tous scripts i se scripts twn enemies    
-        if (other.gameObject.CompareTag("ThrownRock"))
-        {
-            RangedTakeDamage();
-            Debug.Log(PlayerLife);
+        //if (other.gameObject.CompareTag("ThrownRock"))
+        //{
+        //    RangedTakeDamage();
+        //    Debug.Log(PlayerLife);
             if (PlayerLife <= 0)
             {
                 PlayerDiedEndGame();
             }
-        }
-        else if (other.gameObject.CompareTag("MeleeEnemy"))
-        {
-            MeleeTakeDamage();
-            Debug.Log(PlayerLife);
-            if (PlayerLife <= 0)
-            {
-                PlayerDiedEndGame();
-            }
-        }
+        //}
+        //else if (other.gameObject.CompareTag("MeleeEnemy"))
+        //{
+        //    MeleeTakeDamage();
+        //    Debug.Log(PlayerLife);
+            //if (PlayerLife <= 0)
+            //{
+            //    PlayerDiedEndGame();
+            //}
+        //}
     }
 
     public void OnTriggerExit(Collider other)

@@ -61,9 +61,9 @@ public class EnemyMeleeAI: MonoBehaviour
         if (PlayerInAttRange && PlayerInRange) AttackPlayer();
     }
 
-    private void Patroling()
+    public void Patroling()
     {
-        EnemyAnim.SetBool("Walk Forward", true);
+        //EnemyAnim.SetBool("Walk Forward", true);
         if (!PatrolPointSet) SearchWalkPoint();
 
         if (PatrolPointSet)
@@ -75,7 +75,7 @@ public class EnemyMeleeAI: MonoBehaviour
         if (CalcDistancetoPatrolPoint.magnitude < 1f)
             PatrolPointSet = false;
     }
-    private void SearchWalkPoint()
+    public void SearchWalkPoint()
     {
         //Make enemy find random patrol points around him
         float ZAxisMove = Random.Range(-PatrolPointRange, PatrolPointRange);
@@ -93,7 +93,7 @@ public class EnemyMeleeAI: MonoBehaviour
         EnemyAgent.SetDestination(PlayerCharacter.position);
     }
 
-    private void AttackPlayer()
+    public void AttackPlayer()
     {
         #region OldAttack 
         //if (AttackDistance<=3f)
@@ -123,8 +123,8 @@ public class EnemyMeleeAI: MonoBehaviour
         //}
         //}
         #endregion
-        EnemyAnim.SetBool("Walk Forward", false);
-        EnemyAnim.SetBool("Stab Attack", true);
+        //EnemyAnim.SetBool("Walk Forward", false);
+        //EnemyAnim.SetBool("Stab Attack", true);
         //Make enemy stanionary to attack
         EnemyAgent.SetDestination(EnemyAgent.transform.position);
         transform.LookAt(PlayerCharacter);
@@ -132,23 +132,28 @@ public class EnemyMeleeAI: MonoBehaviour
         Collider[] HitCollisions = Physics.OverlapSphere(transform.position, AttackRadius);
         foreach (var player in HitCollisions)
         {
-            if (HaveAttacked == false)
+            if (player.CompareTag("Player"))
             {
-                player.GetComponent<Player>().MeleeTakeDamage();
-                HaveAttacked = true;
-                Invoke(nameof(ResetAttack), AttackTimer);
-            }
 
+
+                if (HaveAttacked == false)
+                {
+                    player.GetComponent<Player>().PlayerLife-=damage;
+                    HaveAttacked = true;
+                    Invoke(nameof(ResetAttack), AttackTimer);
+                }
+            }
         }
     }
     private void ResetAttack()
     {
         HaveAttacked = false;
-        EnemyAnim.SetBool("Stab Attack", false);
+       // EnemyAnim.SetBool("Stab Attack", false);
     }
 
     public void TakeDamage()
     {
+        Debug.Log("I took damage");
         EnemyHp -= player.PlayerDamage;
 
         if (EnemyHp <= 0) Invoke(nameof(DestroyEnemy), 0.5f);
