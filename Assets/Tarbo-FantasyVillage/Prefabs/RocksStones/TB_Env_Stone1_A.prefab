@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 23555492435510732}
   - component: {fileID: 2221980234871901546}
   - component: {fileID: 2366382222446859874}
+  - component: {fileID: 8601411023001732715}
   m_Layer: 0
   m_Name: TB_Env_Stone1_A
   m_TagString: ThrownRock
@@ -105,9 +106,22 @@ CapsuleCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1673768660597982}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   m_Radius: 0.2
   m_Height: 0.3
   m_Direction: 1
   m_Center: {x: 0.0063479543, y: 0.06568256, z: -7.1276764e-17}
+--- !u!114 &8601411023001732715
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1673768660597982}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dcaab13281c5c3b448f83ad9d322b434, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damage: 10

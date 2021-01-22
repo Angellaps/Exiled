@@ -47,11 +47,11 @@ public class AttackBehavior : StateMachineBehaviour
     //OnStateExit is called when a transition ends and the state machine finishes evaluating this state
     override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        //if (Vector3.Distance(PlayerCharacter.transform.position, EnemyRB.position) > AttackDistance)
-        //{
-        //    //animator.ResetTrigger("Stab Attack");
-        //    animator.SetTrigger("PlayerLost");
-        //}
+        animator.ResetTrigger("Walking");
+        if (Vector3.Distance(PlayerCharacter.transform.position, EnemyRB.position) > AttackDistance)
+        {
+            animator.ResetTrigger("Stab Attack");
+        }
         //if (Vector3.Distance(PlayerCharacter.transform.position, EnemyRB.position) <= DetectionRange)
         //{
         //    animator.SetTrigger("Walking");

@@ -119,8 +119,8 @@ MonoBehaviour:
   PatrolPointRange: 5
   AttackTimer: 1
   projectile: {fileID: 1673768660597982, guid: 41d5b1a2a577beb469b3c1173179bd11, type: 3}
-  DetectionRange: 5
-  AttackDistance: 3
+  DetectionRange: 10
+  AttackDistance: 7
   PlayerInRange: 0
   PlayerInAttRange: 0
 --- !u!1001 &5726664094708939577

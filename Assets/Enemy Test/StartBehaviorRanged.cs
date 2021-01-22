@@ -28,7 +28,7 @@ public class StartBehaviorRanged : StateMachineBehaviour
             EnemyScript.Patroling();
         }
         
-        if ((Vector3.Distance(PlayerCharacter.position, EnemyRB.position) <= DetectionRange))
+        if ((Vector3.Distance(PlayerCharacter.position, EnemyRB.position) <= DetectionRange)/*&& Vector3.Distance(PlayerCharacter.position, EnemyRB.position) >= AttackDistance */)
         {
             animator.SetTrigger("Walking");
         }
