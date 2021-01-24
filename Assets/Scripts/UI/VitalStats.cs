@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class VitalStats : MonoBehaviour
 {
     [SerializeField] FoodSO mushroom;
-    public Image fill;
+    public Image foodfill,waterfill;
     public Image empty;
     public GameObject alternate;
     public Text foodfillText, waterfillText;
@@ -74,9 +74,9 @@ public class VitalStats : MonoBehaviour
         foodPercentage = ((int)(foodCurrentAmountPercentage * 100f));
         waterPercentage = ((int)(waterCurrentAmountPercentage * 100f));
         foodfillText.text = (foodPercentage + "%");
-        fill.fillAmount = foodCurrentAmountPercentage;
+        foodfill.fillAmount = foodCurrentAmountPercentage;
         waterfillText.text = (waterPercentage + "%");
-        fill.fillAmount = waterCurrentAmountPercentage;
+        waterfill.fillAmount = waterCurrentAmountPercentage;
 
         player.StatusSystem(foodCurrentAmount, waterCurrentAmountPercentage);
     }

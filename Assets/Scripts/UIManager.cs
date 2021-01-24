@@ -9,7 +9,6 @@ public class UIManager : MonoBehaviour
 {
     public InventorySO playerInventory;
     public GameObject inventoryUI;
-    public GameObject menuUI;
     [SerializeField]
     private GameObject deathMenu,pauseMenu;
     [SerializeField]
@@ -64,16 +63,16 @@ public class UIManager : MonoBehaviour
         SceneManager.LoadScene("Main Game Scene");
         playerInventory.InventoryContainer.Clear();
     }
-    public void LoadMenu()
+    /*public void LoadMenu()
     {
-        menuUI.SetActive(true);
+        //menuUI.SetActive(true);
     }
     public void QuitMenu()
     {
-        menuUI.SetActive(false);
+        //menuUI.SetActive(false);
         pauseMenu.SetActive(false);
         deathMenu.SetActive(false);
-    }
+    }*/
     public void ResumeGame()
     {
         Time.timeScale = 1f;
