@@ -1,11 +1,9 @@
 fileFormatVersion: 2
-guid: 357eb6eedc6c2264883bab7eb5084418
+guid: 18f48fa94fba69140b8f5be43da63204
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences:
-  - inventoryAddClip: {instanceID: 0}
-  - player: {instanceID: 0}
+  defaultReferences: []
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

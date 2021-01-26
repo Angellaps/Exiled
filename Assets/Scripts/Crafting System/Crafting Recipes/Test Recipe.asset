@@ -20,3 +20,5 @@ MonoBehaviour:
   Results:
   - Item: {fileID: 11400000, guid: 390b6e8376f4ea1438b743958f3d57f5, type: 2}
     Amount: 1
+  inventoryAddClip: {fileID: 8300000, guid: 6069f7303c1a86e45bbfe199fbe2162e, type: 3}
+  player: {fileID: 1256756805690999422, guid: d6ffc7a68b46ea349a9e7b7fcb479942, type: 3}

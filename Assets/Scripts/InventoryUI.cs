@@ -15,6 +15,7 @@ public class InventoryUI : MonoBehaviour
     void Start()
     {
         CreateInventory();
+
     }
 
     void Update()
@@ -35,6 +36,7 @@ public class InventoryUI : MonoBehaviour
                 obj.GetComponent<RectTransform>().localPosition = GetPosition(i);
                 obj.GetComponentInChildren<TextMeshProUGUI>().text = inventory.InventoryContainer[i].itemAmount.ToString("n0");
                 itemsInsideInventory.Add(inventory.InventoryContainer[i], obj);
+
             }
         }
     }

@@ -17,6 +17,15 @@ public class CraftingRecipe : ScriptableObject
 
     public List<ItemAmount> Materials;
     public List<ItemAmount> Results;
+    [SerializeField]
+    private AudioClip inventoryAddClip;
+    [SerializeField]
+    GameObject player;
+
+    public void Start()
+    {
+        player = GameObject.FindGameObjectWithTag("Player");
+    }
 
     public bool CanCraft(IItemContainer itemContainer)
     {
@@ -40,6 +49,8 @@ public class CraftingRecipe : ScriptableObject
                 for (int i = 0; i < itemAmount.Amount; i++)
                 {
                     itemContainer.RemoveItem(itemAmount.Item);
+                    //if we need remove sounds for smthing other than crafted items
+                    //AudioSource.PlayClipAtPoint(inventoryRemoveClip, transform.position);
                 }
             }
             //Add crafted results in bag
@@ -48,6 +59,8 @@ public class CraftingRecipe : ScriptableObject
                 for (int i = 0; i < itemAmount.Amount; i++)
                 {
                     itemContainer.AddItem(itemAmount.Item, itemAmount.Amount);
+                    AudioSource.PlayClipAtPoint(inventoryAddClip, player.transform.position);
+
                 }
             }
         }

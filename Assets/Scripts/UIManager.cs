@@ -19,7 +19,7 @@ public class UIManager : MonoBehaviour
     private TextMeshProUGUI deathDaysSurvivedText,daysSurvivedText, pauseText;
 
     //private Text daysSurvivedText, pauseText;
-    private int daysSurvived;
+    public int daysSurvived;
 
   
     private void Start()
@@ -51,7 +51,8 @@ public class UIManager : MonoBehaviour
 
     IEnumerator CountTime()
     {
-        yield return new WaitForSeconds(0.6f);
+        //change delay to adjust proper time
+        yield return new WaitForSeconds(6.0f);
         daysSurvived++;
         daysSurvivedText.text = daysSurvived + " days";
         deathDaysSurvivedText.text = daysSurvived + " days";
