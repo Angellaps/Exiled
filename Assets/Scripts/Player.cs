@@ -114,7 +114,7 @@ public class Player : MonoBehaviour
                 }
             }
             ///!!!! REWORK ENEMY SCRIPTS TO HAVE A UNIVERSAL TAKE DAMAGE METHOD
-            foreach (GameObject enemy in enemiesInFront)
+            foreach (GameObject enemy in EnemiesInFront(enemiesInRange))
             {
                 transform.LookAt(hit.transform); 
                 if (enemy.GetComponent<EnemyMeleeAI>()!=null)
@@ -254,9 +254,8 @@ public class Player : MonoBehaviour
 
 
     //Returns all the enemies in front of the player (180 degrees)
-    public List<GameObject> EnemiesInFront()
+    public List<GameObject> EnemiesInFront(List<GameObject> enemiesInRange)
     {
-
         foreach (GameObject enemy in enemiesInRange)
         {
             if ((transform.InverseTransformPoint(enemy.transform.position).z) > 0.0f)
