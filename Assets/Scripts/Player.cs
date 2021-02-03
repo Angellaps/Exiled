@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Player : MonoBehaviour
+public class Player : MonoBehaviour , IDamage
 {
     public List<GameObject> interactablesInRange = new List<GameObject>();
     public List<GameObject> consumablesInRange = new List<GameObject>();
@@ -120,7 +120,8 @@ public class Player : MonoBehaviour
                 if (enemy.GetComponent<EnemyMeleeAI>()!=null)
                 {
                     Debug.Log("I dealt damage");
-                    enemy.GetComponent<EnemyMeleeAI>().TakeDamage();
+                    enemy.GetComponent<IDamage>();
+                    //enemy.GetComponent<EnemyMeleeAI>().TakeDamage();
                 }
                 
             }
@@ -194,6 +195,10 @@ public class Player : MonoBehaviour
         {
             enemiesInRange.Add(other.gameObject);
         }
+        if (other.CompareTag("RangedEnemy"))
+        {
+            enemiesInRange.Remove(other.gameObject);
+        }
         if (other.CompareTag("Consumable"))
         {
             consumablesInRange.Add(other.gameObject);
@@ -232,6 +237,10 @@ public class Player : MonoBehaviour
         {
             enemiesInRange.Remove(other.gameObject);
         }
+        if (other.CompareTag("RangedEnemy"))
+        {
+            enemiesInRange.Remove(other.gameObject);
+        }
         if (other.CompareTag("Consumable"))
         {
             consumablesInRange.Remove(other.gameObject);
@@ -241,11 +250,11 @@ public class Player : MonoBehaviour
 
     public void RangedTakeDamage()
     {
-        PlayerLife -= RangedEnemy.damage;
+       PlayerLife -= RangedEnemy.damage;
     }
     public void MeleeTakeDamage()
     {
-        PlayerLife -= MeleeEnemy.damage;
+       PlayerLife -= MeleeEnemy.damage;
     }
     private void OnApplicationQuit()
     {
@@ -293,4 +302,13 @@ public class Player : MonoBehaviour
 
     }
 
+    public void TakeDamage()
+    {
+
+    }
+
+    public void DealDamage()
+    {
+
+    }
 }

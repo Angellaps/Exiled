@@ -2,7 +2,7 @@
 using UnityEngine;
 using UnityEngine.AI;
 
-public class EnemyMeleeAI: MonoBehaviour
+public class EnemyMeleeAI: MonoBehaviour , IDamage
 {
     public float speed = 3f;
     public float AttackRadius = 3f;
@@ -134,8 +134,6 @@ public class EnemyMeleeAI: MonoBehaviour
         {
             if (player.CompareTag("Player"))
             {
-
-
                 if (HaveAttacked == false)
                 {
                     player.GetComponent<Player>().PlayerLife-=damage;
@@ -170,5 +168,10 @@ public class EnemyMeleeAI: MonoBehaviour
         Gizmos.DrawWireSphere(transform.position, AttackRadius);
         Gizmos.color = Color.yellow;
         Gizmos.DrawWireSphere(transform.position, DetectionRange);
+    }
+
+    public void DealDamage()
+    {
+        throw new System.NotImplementedException();
     }
 }

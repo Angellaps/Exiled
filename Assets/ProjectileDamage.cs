@@ -12,5 +12,9 @@ public class ProjectileDamage : MonoBehaviour
         {
             other.GetComponent<Player>().PlayerLife -= damage;
         }
+        else
+        {
+            Destroy(gameObject);
+        }
     }
 }

@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.AI;
 
 public class StartBehavior : StateMachineBehaviour
@@ -33,32 +31,32 @@ public class StartBehavior : StateMachineBehaviour
             Debug.Log("Sup");
             animator.SetTrigger("Stab Attack");
         }
-        else
-        {
-            return;
-        }
-
-        if (Vector3.Distance(PlayerCharacter.position, EnemyRB.position) >= DetectionRange && Vector3.Distance(PlayerCharacter.position, EnemyRB.position) >= AttackDistance)
-        {
-            EnemyScript.Patroling();
-        }
-        
-        //if ((Vector3.Distance(PlayerCharacter.position, EnemyRB.position) <= DetectionRange))
-        //{
-        //    animator.SetTrigger("Walking");
-        //}
         //else
         //{
         //    return;
         //}
 
-      
+        if (Vector3.Distance(PlayerCharacter.position, EnemyRB.position) >= DetectionRange && Vector3.Distance(PlayerCharacter.position, EnemyRB.position) >= AttackDistance)
+        {
+            EnemyScript.Patroling();
+        }
+
+        if ((Vector3.Distance(PlayerCharacter.position, EnemyRB.position) <= DetectionRange))
+        {
+            animator.SetTrigger("Walking");
+        }
+        //else
+        //{
+        //    return;
+        //}
+
+
     }
 
-    
+
     override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        animator.ResetTrigger("Walking");
+        //animator.ResetTrigger("Walking");
     }
 
     // OnStateMove is called right after Animator.OnAnimatorMove()

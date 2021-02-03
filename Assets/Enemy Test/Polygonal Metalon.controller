@@ -29,10 +29,7 @@ AnimatorStateTransition:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: 
-  m_Conditions:
-  - m_ConditionMode: 1
-    m_ConditionEvent: Walking
-    m_EventTreshold: 0
+  m_Conditions: []
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 1102388722941686956}
   m_Solo: 0
@@ -125,7 +122,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 204901114a1b6de47b63b502b6a1c58f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  AttackDistance: 2
+  AttackDistance: 3
   DetectionRange: 5
 --- !u!114 &-1105136641717646394
 MonoBehaviour:
@@ -140,7 +137,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 10
-  AttackRadius: 2
+  AttackRadius: 3
   Enemypos: {fileID: 0}
   PlayerCharacter: {fileID: 0}
   RandomPatrolPoint: {x: 0, y: 0, z: 0}

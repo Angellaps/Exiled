@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class EnemyRangedScript : MonoBehaviour
+public class EnemyRangedScript : MonoBehaviour , IDamage
 {
     public float speed = 0f;
     public float damage = 0f;
@@ -137,6 +137,11 @@ public class EnemyRangedScript : MonoBehaviour
         Gizmos.DrawWireSphere(transform.position, AttackDistance);
         Gizmos.color = Color.yellow;
         Gizmos.DrawWireSphere(transform.position, DetectionRange);
+    }
+
+    public void DealDamage()
+    {
+        throw new System.NotImplementedException();
     }
 }
 

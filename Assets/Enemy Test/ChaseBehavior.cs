@@ -22,7 +22,7 @@ public class ChaseBehavior : StateMachineBehaviour
         Enemy = animator.GetComponent<NavMeshAgent>();
         EnemyRB = animator.GetComponent<Rigidbody>();
         PlayerCharacter = GameObject.Find("Character").transform;
-       // animator.SetTrigger("Walking");
+        //animator.SetTrigger("Walking");
     }
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
@@ -37,23 +37,23 @@ public class ChaseBehavior : StateMachineBehaviour
         {
             animator.SetTrigger("Stab Attack");
         }
-        else if (Vector3.Distance(PlayerCharacter.position, EnemyRB.position) <= DetectionRange)
-        {
-            return;
-        }
-        else
-        {
+        //else if (Vector3.Distance(PlayerCharacter.position, EnemyRB.position) <= DetectionRange)
+        //{
+        //    return;
+        //}
+        //else
+        //{
             
-            //Enemy.SetDestination(animator.transform.position);
-            animator.SetTrigger("PlayerLost");
-        }
+        //    //Enemy.SetDestination(animator.transform.position);
+        //    animator.SetTrigger("PlayerLost");
+        //}
     }
 
     //OnStateExit is called when a transition ends and the state machine finishes evaluating this state
     override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        Enemy.SetDestination(animator.transform.position);
-        animator.ResetTrigger("Stab Attack");
-        animator.ResetTrigger("PlayerLost");
+        //Enemy.SetDestination(animator.transform.position);
+        //animator.ResetTrigger("Stab Attack");
+        //animator.ResetTrigger("PlayerLost");
     }
 }
