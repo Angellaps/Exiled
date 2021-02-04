@@ -12,21 +12,20 @@ public class EnemyScript : MonoBehaviour
     GameObject Player;
     public float EnemyLife;
     public float damage = 15f;
+
     // Start is called before the first frame update
     void Start()
-    {
-    
+    {    
         EnemyLife = 20.0f;
     }
 
     // Update is called once per frame
     void Update()
-    {
-        
+    {        
      
     }
 
-    public  void TakeDamage()
+    public void TakeDamage()
     {
         EnemyLife -= player.PlayerDamage;
         Debug.Log("Enemy took some damage!");

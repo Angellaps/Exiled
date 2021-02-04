@@ -48,10 +48,6 @@ public class Player : MonoBehaviour , IDamage
 
     private void Update()
     {
-        //if (PlayerLife<=0)
-        //{
-        //    Destroy(gameObject);
-        //}
         AttackTimer += Time.deltaTime;
         StatusSystem(PlayerHunger, PlayerThirst);
         PlayerMovement();
@@ -59,6 +55,11 @@ public class Player : MonoBehaviour , IDamage
         //RightClickAction();
         //GatherResources();
         //StatusSystem();
+
+        //DEATH CHECK
+        if (PlayerLife <= 0) {
+            PlayerDiedEndGame();
+        }
     }
 
     void PlayerMovement()
@@ -116,11 +117,12 @@ public class Player : MonoBehaviour , IDamage
             ///!!!! REWORK ENEMY SCRIPTS TO HAVE A UNIVERSAL TAKE DAMAGE METHOD
             foreach (GameObject enemy in EnemiesInFront(enemiesInRange))
             {
-                transform.LookAt(hit.transform); 
-                if (enemy.GetComponent<EnemyMeleeAI>()!=null)
+                
+                //Placeholder mexri na katharisei ta scripts twn enemies o thodoris
+                if (enemy.GetComponent<EnemyScript>()!= null)
                 {
-                    Debug.Log("I dealt damage");
-                    enemy.GetComponent<IDamage>();
+                    Debug.Log("I dealt damage");                    
+                    enemy.GetComponent<EnemyScript>().TakeDamage();
                     //enemy.GetComponent<EnemyMeleeAI>().TakeDamage();
                 }
                 
@@ -136,6 +138,7 @@ public class Player : MonoBehaviour , IDamage
             }
         }
     }
+
     //Delay the destruction of Interactable to line up with the animation WIP
     IEnumerator WaitAndDestroy(GameObject obj, float time)
     {
@@ -152,36 +155,35 @@ public class Player : MonoBehaviour , IDamage
         //Calculate player status such as Life , Hunger , Water , Sanity etc.
     }
 
+    //void GatherResources()
+    //{
+    //    if (Input.GetKeyDown(KeyCode.F))
+    //    {
+    //        //transform.LookAt(hitObject.transform);
+    //        PlayerAnim.SetBool("IsGathering", true);
+    //        Debug.Log("+20");
+    //        PlayerHunger += 20.0f;
+    //    }
+    //    //Ray ray = cam.ScreenPointToRay(Input.mousePosition);
+    //    //RaycastHit hit;
+    //    /*if (Physics.Raycast(ray, out hit, 100))
+    //    {
+    //        GameObject hitObject = hit.transform.gameObject;
+    //        if (hitObject.CompareTag("Consumable") && ConsumableRangeCheck(hitObject))
+    //        {
+    //            transform.LookAt(hitObject.transform);
+    //            PlayerAnim.SetBool("IsGathering", true);
+    //            PlayerHunger += 20.0f;
+    //            //TODO : specific interactions with specific items, food interface needs 2 be done
 
-    void GatherResources()
-    {
-        if (Input.GetKeyDown(KeyCode.F))
-        {
-            //transform.LookAt(hitObject.transform);
-            PlayerAnim.SetBool("IsGathering", true);
-            Debug.Log("+20");
-            PlayerHunger += 20.0f;
-        }
-        //Ray ray = cam.ScreenPointToRay(Input.mousePosition);
-        //RaycastHit hit;
-        /*if (Physics.Raycast(ray, out hit, 100))
-        {
-            GameObject hitObject = hit.transform.gameObject;
-            if (hitObject.CompareTag("Consumable") && ConsumableRangeCheck(hitObject))
-            {
-                transform.LookAt(hitObject.transform);
-                PlayerAnim.SetBool("IsGathering", true);
-                PlayerHunger += 20.0f;
-                //TODO : specific interactions with specific items, food interface needs 2 be done
+    //        }
+    //    }*/
+    //    else
+    //    {
+    //        PlayerAnim.SetBool("IsGathering", false);
+    //    }
 
-            }
-        }*/
-        else
-        {
-            PlayerAnim.SetBool("IsGathering", false);
-        }
-
-    }
+    //}
 
     public void OnTriggerEnter(Collider other)
     {
@@ -203,26 +205,6 @@ public class Player : MonoBehaviour , IDamage
         {
             consumablesInRange.Add(other.gameObject);
         }
-
-        //???????????? afta edo kato tha figoun se dika tous scripts i se scripts twn enemies    
-        //if (other.gameObject.CompareTag("ThrownRock"))
-        //{
-        //    RangedTakeDamage();
-        //    Debug.Log(PlayerLife);
-            if (PlayerLife <= 0)
-            {
-                PlayerDiedEndGame();
-            }
-        //}
-        //else if (other.gameObject.CompareTag("MeleeEnemy"))
-        //{
-        //    MeleeTakeDamage();
-        //    Debug.Log(PlayerLife);
-            //if (PlayerLife <= 0)
-            //{
-            //    PlayerDiedEndGame();
-            //}
-        //}
     }
 
     public void OnTriggerExit(Collider other)

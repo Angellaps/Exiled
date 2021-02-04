@@ -176,6 +176,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Egg_Web.004
       objectReference: {fileID: 0}
+    - target: {fileID: 6575227191265327523, guid: 289243a6a030926418b0da9e5c8b87d9,
+        type: 3}
+      propertyPath: m_TagString
+      value: Interactable
+      objectReference: {fileID: 0}
     - target: {fileID: 6575227191265355139, guid: 289243a6a030926418b0da9e5c8b87d9,
         type: 3}
       propertyPath: m_LocalPosition.x

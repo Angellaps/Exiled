@@ -24,17 +24,28 @@ public class PCGManager : MonoBehaviour
     public List<Node> TreeNodes;
     public List<Node> OreNodes;
 
+    private void Start() {
+        Populate( TreeSpawnPoints,  TreeNodes);
+    }
+
     //Called at world creation and at the start of each day.
     public bool CommenceScenePopulation() {
         //Add Tree Nodes to the Tree Spawn Points.
-        Populate(ref TreeSpawnPoints, ref TreeNodes);
+        Populate( TreeSpawnPoints,  TreeNodes);
         //Same for Ore Nodes.
-        Populate(ref OreSpawnPoints, ref OreNodes);
+        Populate( OreSpawnPoints,  OreNodes);
         return true;
     }
 
-    public void Populate(ref List<SpawnPoint> spawns, ref List<Node> nodes) {
+    public void Populate(List<SpawnPoint> spawns, List<Node> nodes) {
+        
+        int[] spawnCounterPerNode = new int[nodes.Count];
+        for (int i = 0; i < spawnCounterPerNode.Length; i++) {
+            spawnCounterPerNode[i] = 0;
+        }
+        int nodeCounter = 0;
         System.Random rnd = new System.Random();
+        
         foreach (Node node in nodes) {
             int spawnCounter = 0;            
             int amountToSpawn = node.amountToHave - node.currentlyInScene;
@@ -52,15 +63,13 @@ public class PCGManager : MonoBehaviour
                     
                     //If spawn point is empty, instansiate the node and set the spawn point's occupied bool to true.
                     if (spawns[r].occupied == false) {
-                        Instantiate(node.obj, spawns[r].spawnPoint.transform);
-                        spawnCounter++;
-
+                        Instantiate(node.obj, spawns[r].spawnPoint.transform.position, spawns[r].spawnPoint.transform.rotation);
+                        spawnCounterPerNode[nodeCounter]++;
                         //WHY IS THIS A THING??????
                         //EXPLAIN WHY spawns[r].occupied = true DOESN'T WORK
                         SpawnPoint v = spawns[r];
                         v.occupied = true;
-                        spawns[r] = v;
-                        spawnCounter++;
+                        spawns[r] = v;                        
                         spawnedNode = true;
                     }
                 }
@@ -69,10 +78,16 @@ public class PCGManager : MonoBehaviour
             //?????????????????????????????????????????
             //TO MIALO MOU EXEI GINEI POURES. SIGOURA IPARXEI KALITEROS TROPOS.
             //Mou petouse error giati to node einai 'for each variable'
-            Node temp = node;
-            temp.currentlyInScene += spawnCounter;
-            int index = nodes.IndexOf(node);
-            nodes[index] = temp;        
+            //Node temp = node;
+            //temp.currentlyInScene += 1;
+            //int index = nodes.IndexOf(node);
+            //nodes[index] = temp;    
+            nodeCounter++;
+        }
+        for (int i = 0; i < spawnCounterPerNode.Length; i++) {
+            Node temp = nodes[i];
+            temp.currentlyInScene += spawnCounterPerNode[i];            
+            nodes[i] = temp;
         }
         //return;
     }
