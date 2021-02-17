@@ -4,28 +4,22 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class PCGManager : MonoBehaviour
-{
+{ 
     [Serializable]
     public struct Node {
         public GameObject obj; //What node we're referring to. Copper/Silver/Oak Tree/Pine Tree etc
-        [Range(0, 255)]
+        [Range(0, 300)]
         public int amountToHave; //How many of these objects do we want spawned in our scene. Fixed amount.
         public int currentlyInScene; //How many are there in the scene already.
-    }
+    }   
 
-    [Serializable]
-    public struct SpawnPoint {
-        public GameObject spawnPoint; //Empty game objects in scene where stuff will spawn
-        public bool occupied;        //Bool for if something is already spawned there.
-    }    
-
-    public List<SpawnPoint> TreeSpawnPoints;
-    public List<SpawnPoint> OreSpawnPoints;
+    public List<SpawnPoints> TreeSpawnPoints;
+    public List<SpawnPoints> OreSpawnPoints;
     public List<Node> TreeNodes;
     public List<Node> OreNodes;
 
     private void Start() {
-        Populate( TreeSpawnPoints,  TreeNodes);
+        CommenceScenePopulation();
     }
 
     //Called at world creation and at the start of each day.
@@ -37,8 +31,8 @@ public class PCGManager : MonoBehaviour
         return true;
     }
 
-    public void Populate(List<SpawnPoint> spawns, List<Node> nodes) {
-        
+    public void Populate(List<SpawnPoints> spawns, List<Node> nodes) {     
+
         int[] spawnCounterPerNode = new int[nodes.Count];
         for (int i = 0; i < spawnCounterPerNode.Length; i++) {
             spawnCounterPerNode[i] = 0;
@@ -63,32 +57,31 @@ public class PCGManager : MonoBehaviour
                     
                     //If spawn point is empty, instansiate the node and set the spawn point's occupied bool to true.
                     if (spawns[r].occupied == false) {
+                        //Create new node at spawn point's position
                         Instantiate(node.obj, spawns[r].spawnPoint.transform.position, spawns[r].spawnPoint.transform.rotation);
                         spawnCounterPerNode[nodeCounter]++;
-                        //WHY IS THIS A THING??????
-                        //EXPLAIN WHY spawns[r].occupied = true DOESN'T WORK
-                        SpawnPoint v = spawns[r];
+                        // Save how many new nodes were added in scene to update
+                        // CurrentlyInScene info per node. Need to do it in a temp Array
+                        // cause Structs are scuffed af
+                        SpawnPoints v = spawns[r];
                         v.occupied = true;
                         spawns[r] = v;                        
                         spawnedNode = true;
+                        spawnCounter++;
                     }
                 }
             }
-
-            //?????????????????????????????????????????
-            //TO MIALO MOU EXEI GINEI POURES. SIGOURA IPARXEI KALITEROS TROPOS.
-            //Mou petouse error giati to node einai 'for each variable'
-            //Node temp = node;
-            //temp.currentlyInScene += 1;
-            //int index = nodes.IndexOf(node);
-            //nodes[index] = temp;    
+            Debug.Log("Spawned " + spawnCounter + " " + node.obj.ToString());            
             nodeCounter++;
         }
+        
+        //Update CurrentlyInScene info per Node
         for (int i = 0; i < spawnCounterPerNode.Length; i++) {
             Node temp = nodes[i];
             temp.currentlyInScene += spawnCounterPerNode[i];            
             nodes[i] = temp;
+            
         }
-        //return;
+        
     }
 }
