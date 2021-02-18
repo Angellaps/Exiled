@@ -79,8 +79,7 @@ public class PCGManager : MonoBehaviour
         for (int i = 0; i < spawnCounterPerNode.Length; i++) {
             Node temp = nodes[i];
             temp.currentlyInScene += spawnCounterPerNode[i];            
-            nodes[i] = temp;
-            
+            nodes[i] = temp;            
         }
         
     }

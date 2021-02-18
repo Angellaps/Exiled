@@ -13,7 +13,7 @@ public class SpawnPoints : MonoBehaviour {
     public GameObject spawnPoint;
     public GameObject PCGManager;
 
-    void Start() {
+    void Awake() {
         occupied = false;
         spawnPoint = this.gameObject;
         switch (type) {
