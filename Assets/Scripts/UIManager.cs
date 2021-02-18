@@ -7,6 +7,18 @@ using TMPro;
 
 public class UIManager : MonoBehaviour
 {
+    public static UIManager Instance { get; private set; }
+
+    [SerializeField] private PlayerWeapons playerWeapons;
+    [SerializeField] private UIHotkeyBar hotkeyBar;
+    private HotkeyManager hotkeyManager;
+
+    public Sprite pickaxeSprite;
+    public Sprite axeSprite;
+    public Sprite swordSprite;
+    public Sprite fistsSprite;
+    public Sprite healthPotionSprite;
+
     public InventorySO playerInventory;
     public GameObject inventoryUI;
     [SerializeField]
@@ -21,9 +33,14 @@ public class UIManager : MonoBehaviour
     //private Text daysSurvivedText, pauseText;
     public int daysSurvived;
 
-  
+    private void Awake()
+    {
+        Instance = this;
+    }
     private void Start()
     {
+        hotkeyManager = new HotkeyManager(playerWeapons);
+        hotkeyBar.SetHotkeyBar(hotkeyManager);
         daysSurvivedText.text = " Days Survived" + daysSurvived;
         deathDaysSurvivedText.text = " Days Survived" + daysSurvived;
         StartCoroutine(CountTime());
@@ -31,6 +48,7 @@ public class UIManager : MonoBehaviour
 
     public void Update()
     {
+        hotkeyManager.Update();
         if (inventoryUIEnabled)
         {
             if (Input.GetKeyDown(KeyCode.B))
