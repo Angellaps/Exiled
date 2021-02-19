@@ -39834,6 +39834,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1242357318}
+  - component: {fileID: 1242357317}
   m_Layer: 0
   m_Name: SceneManager
   m_TagString: Untagged
@@ -39841,6 +39842,21 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &1242357317
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1242357316}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e98272bcfa7a2cc408ed552ac4a8c741, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sun: {fileID: 705507994}
+  secondsInFullDay: 500
+  currentTimeOfDay: 0.46
 --- !u!4 &1242357318
 Transform:
   m_ObjectHideFlags: 0
@@ -56429,6 +56445,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PlayerAnim: {fileID: 0}
   UIManager: {fileID: 1968024542}
+  Timecontroller: {fileID: 0}
   interactPanel: {fileID: 1943980350}
 --- !u!1 &1814100473
 GameObject:
@@ -61993,11 +62010,11 @@ MonoBehaviour:
   inventoryUI: {fileID: 854921309}
   deathMenu: {fileID: 2032705604}
   pauseMenu: {fileID: 754763273}
+  abilitybar: {fileID: 589250776}
   restartGameBtn: {fileID: 13583285}
   deathDaysSurvivedText: {fileID: 572958771}
   daysSurvivedText: {fileID: 456011428}
-  pauseText: {fileID: 761610271}
-  daysSurvived: 0
+  pauseText: {fileID: 1209682664}
 --- !u!114 &1968024543
 MonoBehaviour:
   m_ObjectHideFlags: 0

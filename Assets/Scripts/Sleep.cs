@@ -6,21 +6,29 @@ public class Sleep : MonoBehaviour
 {
     public Animator PlayerAnim;
     public UIManager UIManager;
+    public TimeController Timecontroller;
     public GameObject interactPanel;
 
     /*private void Start()
     {
         //UIManager = FindObjectOfType<UIManager>();
     }*/
+
+    private void Awake()
+    {
+        Timecontroller = GameObject.FindObjectOfType<TimeController>();
+    }
     private void OnTriggerStay(Collider other)
     {
         if (other.CompareTag("Player"))
         {
             if (Input.GetKeyDown(KeyCode.Z))
             {
-                Debug.Log(UIManager.daysSurvived);
-                UIManager.daysSurvived++;
-                Debug.Log(UIManager.daysSurvived);
+                //Debug.Log(UIManager.daysSurvived);
+
+                //UIManager.daysSurvived++;
+                Timecontroller.UpdateTime();
+                //Debug.Log(UIManager.daysSurvived);
                 Debug.Log("message popping from Sleep Sript, delete after");
                 //need to setup sleeping animation
                 //need to fix going dark screen

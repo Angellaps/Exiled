@@ -12,7 +12,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] private PlayerWeapons playerWeapons;
     [SerializeField] private UIHotkeyBar hotkeyBar;
     private HotkeyManager hotkeyManager;
-
+    private TimeController timeController;
     public Sprite pickaxeSprite;
     public Sprite axeSprite;
     public Sprite swordSprite;
@@ -22,7 +22,7 @@ public class UIManager : MonoBehaviour
     public InventorySO playerInventory;
     public GameObject inventoryUI;
     [SerializeField]
-    private GameObject deathMenu,pauseMenu;
+    private GameObject deathMenu,pauseMenu,abilitybar;
     [SerializeField]
     private Button restartGameBtn;
     bool inventoryUIEnabled = false;
@@ -31,7 +31,8 @@ public class UIManager : MonoBehaviour
     private TextMeshProUGUI deathDaysSurvivedText,daysSurvivedText, pauseText;
 
     //private Text daysSurvivedText, pauseText;
-    public int daysSurvived;
+    //public int daysSurvived;
+    public static int currentDay;
 
     private void Awake()
     {
@@ -41,9 +42,16 @@ public class UIManager : MonoBehaviour
     {
         hotkeyManager = new HotkeyManager(playerWeapons);
         hotkeyBar.SetHotkeyBar(hotkeyManager);
-        daysSurvivedText.text = " Days Survived" + daysSurvived;
-        deathDaysSurvivedText.text = " Days Survived" + daysSurvived;
-        StartCoroutine(CountTime());
+        UpdateTimeVisual();
+        //daysSurvivedText.text = " Days Survived" + daysSurvived;
+        //deathDaysSurvivedText.text = " Days Survived" + daysSurvived;
+        //StartCoroutine(CountTime());
+    }
+
+    public void UpdateTimeVisual()
+    {
+        daysSurvivedText.text = " Days Survived " + currentDay;
+        deathDaysSurvivedText.text = " Days Survived " + currentDay;
     }
 
     public void Update()
@@ -67,7 +75,7 @@ public class UIManager : MonoBehaviour
         }
     }
 
-    IEnumerator CountTime()
+    /*IEnumerator CountTime()
     {
         //change delay to adjust proper time
         yield return new WaitForSeconds(6.0f);
@@ -75,7 +83,7 @@ public class UIManager : MonoBehaviour
         daysSurvivedText.text = daysSurvived + " days";
         deathDaysSurvivedText.text = daysSurvived + " days";
         StartCoroutine(CountTime());
-    }
+    }*/
     public void OnReloadSceneButton()
     {
         Time.timeScale = 1f;
@@ -96,11 +104,13 @@ public class UIManager : MonoBehaviour
     {
         Time.timeScale = 1f;
         pauseMenu.SetActive(false);
+        abilitybar.SetActive(true);
     }
     public void PauseButton()
     {
         Time.timeScale = 0f;
         pauseMenu.SetActive(true);
+        abilitybar.SetActive(false);
         restartGameBtn.onClick.RemoveAllListeners();
         restartGameBtn.onClick.AddListener(() => OnReloadSceneButton());
     }
