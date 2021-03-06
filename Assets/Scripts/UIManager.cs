@@ -29,29 +29,25 @@ public class UIManager : MonoBehaviour
 
     [SerializeField]
     private TextMeshProUGUI deathDaysSurvivedText,daysSurvivedText, pauseText;
+    //private soundManager soundmanager;
 
-    //private Text daysSurvivedText, pauseText;
-    //public int daysSurvived;
     public static int currentDay;
     private AudioSource ambience;
-    private float backgroundVolume = 1f;
-    private float selectedVolume;
-    [SerializeField]
-    private AudioClip menuClip,gameClip;
+    //private float backgroundVolume = 1f;
+    //private float selectedVolume;
+    //[SerializeField]
+    //private AudioClip menuClip,gameClip;
     private void Awake()
     {
         Instance = this;
     }
     private void Start()
     {
-        selectedVolume = backgroundVolume;
+        //selectedVolume = backgroundVolume;
         hotkeyManager = new HotkeyManager(playerWeapons);
         hotkeyBar.SetHotkeyBar(hotkeyManager);
         ambience = GetComponent<AudioSource>();
         UpdateTimeVisual();
-        //daysSurvivedText.text = " Days Survived" + daysSurvived;
-        //deathDaysSurvivedText.text = " Days Survived" + daysSurvived;
-        //StartCoroutine(CountTime());
     }
 
     public void UpdateTimeVisual()
@@ -62,7 +58,7 @@ public class UIManager : MonoBehaviour
 
     public void Update()
     {
-        ambience.volume = backgroundVolume;
+        //ambience.volume = backgroundVolume;
         hotkeyManager.Update();
         if (inventoryUIEnabled)
         {
@@ -82,49 +78,38 @@ public class UIManager : MonoBehaviour
         }
     }
 
-    /*IEnumerator CountTime()
-    {
-        //change delay to adjust proper time
-        yield return new WaitForSeconds(6.0f);
-        daysSurvived++;
-        daysSurvivedText.text = daysSurvived + " days";
-        deathDaysSurvivedText.text = daysSurvived + " days";
-        StartCoroutine(CountTime());
-    }*/
     public void OnReloadSceneButton()
     {
         Time.timeScale = 1f;
         SceneManager.LoadScene("Main Game Scene");
         playerInventory.InventoryContainer.Clear();
     }
-    /*public void LoadMenu()
-    {
-        //menuUI.SetActive(true);
-    }
-    public void QuitMenu()
-    {
-        //menuUI.SetActive(false);
-        pauseMenu.SetActive(false);
-        deathMenu.SetActive(false);
-    }*/
+
     public void ResumeGame()
     {
-        SetAmbienceVolume(selectedVolume);
+        //soundManager.Instance.SetAmbienceVolume()
+        //SetAmbienceVolume(selectedVolume);
         Time.timeScale = 1f;
         pauseMenu.SetActive(false);
         abilitybar.SetActive(true);
-        ambience.Stop();
-        ambience.clip = gameClip;
-        ambience.Play();
+        //soundManager.Instance.PlayGameSound();
+        //soundManager.Instance.PlayGameSoundx(soundManager.Instance.gameClip);
+        soundManager.Instance.PlayGameSoundx(soundManager.Instance.gameClip, soundManager.Instance.menuClip);
+        //ambience.Stop();
+        //ambience.clip = gameClip;
+        //ambience.Play();
     }
     public void PauseButton()
     {
         //keeping the value of the selected backgroundVolue to re-adjust after pause
-        selectedVolume = backgroundVolume;
+        //selectedVolume = backgroundVolume;
         //SetAmbienceVolume(0);
-        ambience.Stop();
-        ambience.clip = menuClip;
-        ambience.Play();
+        //ambience.Stop();
+        //ambience.clip = menuClip;
+        //ambience.Play();
+        //soundManager.Instance.PlayMenuSound();
+        //soundManager.Instance.PlayGameSoundx(soundManager.Instance.menuClip);
+        soundManager.Instance.PlayGameSoundx(soundManager.Instance.menuClip, soundManager.Instance.gameClip);
         Time.timeScale = 0f;
         pauseMenu.SetActive(true);
         abilitybar.SetActive(false);
@@ -149,10 +134,10 @@ public class UIManager : MonoBehaviour
         restartGameBtn.onClick.AddListener(() => OnReloadSceneButton());
         Time.timeScale = 0f;
     }
-    public void SetAmbienceVolume(float vol)
+    /*public void SetAmbienceVolume(float vol)
     {
         backgroundVolume = vol;
-    }
+    }*/
  
 }
 
