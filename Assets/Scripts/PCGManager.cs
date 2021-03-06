@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class PCGManager : MonoBehaviour
 { 
@@ -11,8 +12,9 @@ public class PCGManager : MonoBehaviour
         [Range(0, 300)]
         public int amountToHave; //How many of these objects do we want spawned in our scene. Fixed amount.
         public int currentlyInScene; //How many are there in the scene already.
-    }   
+    }
 
+    bool NotBakedYet = true;
     public List<SpawnPoints> TreeSpawnPoints;
     public List<SpawnPoints> OreSpawnPoints;
     public List<Node> TreeNodes;
@@ -28,6 +30,12 @@ public class PCGManager : MonoBehaviour
         Populate( TreeSpawnPoints,  TreeNodes);
         //Same for Ore Nodes.
         Populate( OreSpawnPoints,  OreNodes);
+        if (NotBakedYet)
+        {
+            FindObjectOfType<NavMeshSurface>().BuildNavMesh();
+            NotBakedYet = false;
+            Debug.Log("I rebaked the cake!");
+        }
         return true;
     }
 

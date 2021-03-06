@@ -62,7 +62,7 @@ public class EnemyRangedScript : MonoBehaviour , IDamage
 
     public void Patroling()
     {
-       // EnemyAnimRanged.SetBool("Walk Forward", true);
+        EnemyAnimRanged.SetBool("Walk Forward", true);
         if (!PatrolPointSet) SearchWalkPoint();
 
         if (PatrolPointSet)
@@ -94,8 +94,8 @@ public class EnemyRangedScript : MonoBehaviour , IDamage
 
     public void AttackPlayer()
     {
-       // EnemyAnimRanged.SetBool("Walk Forward", false);
-       // EnemyAnimRanged.SetBool("Cast Spell", true);
+        EnemyAnimRanged.SetBool("Walk Forward", false);
+        EnemyAnimRanged.SetBool("Cast Spell", true);
         //Make enemy stanionary to attack
         EnemyAgent.SetDestination(EnemyAgent.transform.position);
 

@@ -63,7 +63,7 @@ public class EnemyMeleeAI: MonoBehaviour , IDamage
 
     public void Patroling()
     {
-        //EnemyAnim.SetBool("Walk Forward", true);
+        EnemyAnim.SetBool("Walk Forward", true);
         if (!PatrolPointSet) SearchWalkPoint();
 
         if (PatrolPointSet)
@@ -123,20 +123,22 @@ public class EnemyMeleeAI: MonoBehaviour , IDamage
         //}
         //}
         #endregion
-        //EnemyAnim.SetBool("Walk Forward", false);
-        //EnemyAnim.SetBool("Stab Attack", true);
+        EnemyAnim.SetBool("Walk Forward", false);
+        EnemyAnim.SetBool("Stab Attack", true);
         //Make enemy stanionary to attack
-        EnemyAgent.SetDestination(EnemyAgent.transform.position);
+        //EnemyAgent.SetDestination(EnemyAgent.transform.position);
         transform.LookAt(PlayerCharacter);
 
         Collider[] HitCollisions = Physics.OverlapSphere(transform.position, AttackRadius);
         foreach (var player in HitCollisions)
         {
+            Debug.Log(player.name);
             if (player.CompareTag("Player"))
             {
                 if (HaveAttacked == false)
-                {
+                {          
                     player.GetComponent<Player>().PlayerLife-=damage;
+                    
                     HaveAttacked = true;
                     Invoke(nameof(ResetAttack), AttackTimer);
                 }

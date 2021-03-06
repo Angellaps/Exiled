@@ -12,6 +12,7 @@ TagManager:
   - ThrownRock
   - Ground
   - Consumable
+  - BaseCollider
   layers:
   - Default
   - TransparentFX
