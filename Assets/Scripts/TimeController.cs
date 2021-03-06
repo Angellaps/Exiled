@@ -6,7 +6,8 @@ public class TimeController : MonoBehaviour
 {
     public Light sun;
     [SerializeField] private float secondsInFullDay = 50f;
-
+    public GameObject torch;
+    private bool openTorch = true;
     //public event EventHandler OnDayChanged;
     private UIManager uiManager;
     [Range(0, 1)] [SerializeField] private float currentTimeOfDay = 0.5f;
@@ -27,7 +28,7 @@ public class TimeController : MonoBehaviour
     public void Update()
     {
         UpdateSun();
-
+        ActivateLight(currentTimeOfDay);
         //currentTimeOfDay += (Time.deltaTime / secondsInFullDay) * timeMultiplier;
 
         if(currentTimeOfDay >= 1)
@@ -45,6 +46,15 @@ public class TimeController : MonoBehaviour
             //OnDayChanged?.Invoke(UpdateTime(), EventArgs.Empty);
         }
         currentTimeOfDay += (Time.deltaTime / secondsInFullDay) * timeMultiplier;
+
+        //opening Torch depending on time of day
+        if (ActivateLight(currentTimeOfDay)){
+            torch.SetActive(true);
+        }
+        else
+        {
+            torch.SetActive(false);
+        }
     }
     public int GetDaysSurvived()
     {
@@ -54,6 +64,20 @@ public class TimeController : MonoBehaviour
     public void UpdateTime()
     {
         currentTimeOfDay = 1.0f;
+    }
+
+    private bool ActivateLight(float time)
+    {
+
+        if ((time > 0.28f) && (time < 0.7f))
+        {
+            openTorch = false;
+        }
+        else
+        {
+            openTorch = true;
+        }
+        return openTorch;
     }
 
     void UpdateSun()

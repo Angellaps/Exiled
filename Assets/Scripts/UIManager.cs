@@ -33,15 +33,19 @@ public class UIManager : MonoBehaviour
     //private Text daysSurvivedText, pauseText;
     //public int daysSurvived;
     public static int currentDay;
-
+    private AudioSource ambience;
+    private float backgroundVolume = 0.2f;
+    private float selectedVolume;
     private void Awake()
     {
         Instance = this;
     }
     private void Start()
     {
+        selectedVolume = backgroundVolume;
         hotkeyManager = new HotkeyManager(playerWeapons);
         hotkeyBar.SetHotkeyBar(hotkeyManager);
+        ambience = GetComponent<AudioSource>();
         UpdateTimeVisual();
         //daysSurvivedText.text = " Days Survived" + daysSurvived;
         //deathDaysSurvivedText.text = " Days Survived" + daysSurvived;
@@ -56,6 +60,7 @@ public class UIManager : MonoBehaviour
 
     public void Update()
     {
+        ambience.volume = backgroundVolume;
         hotkeyManager.Update();
         if (inventoryUIEnabled)
         {
@@ -102,12 +107,16 @@ public class UIManager : MonoBehaviour
     }*/
     public void ResumeGame()
     {
+        SetAmbienceVolume(selectedVolume);
         Time.timeScale = 1f;
         pauseMenu.SetActive(false);
         abilitybar.SetActive(true);
     }
     public void PauseButton()
     {
+        //keeping the value of the selected backgroundVolue to re-adjust after pause
+        selectedVolume = backgroundVolume;
+        SetAmbienceVolume(0);
         Time.timeScale = 0f;
         pauseMenu.SetActive(true);
         abilitybar.SetActive(false);
@@ -131,6 +140,10 @@ public class UIManager : MonoBehaviour
         restartGameBtn.onClick.RemoveAllListeners();
         restartGameBtn.onClick.AddListener(() => OnReloadSceneButton());
         Time.timeScale = 0f;
+    }
+    public void SetAmbienceVolume(float vol)
+    {
+        backgroundVolume = vol;
     }
  
 }
