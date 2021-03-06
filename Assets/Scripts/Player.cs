@@ -33,11 +33,13 @@ public class Player : MonoBehaviour , IDamage
     float AttackTimer = 1.0f;
     //Player Inventory
     public InventorySO playerInventory;
+    private Sleep sleepDone;
 
     private UIManager manager;
     private void Awake()
     {
         manager = GameObject.FindObjectOfType<UIManager>();
+        sleepDone = GameObject.FindObjectOfType<Sleep>();
     }
     void Start()
     {
@@ -64,22 +66,25 @@ public class Player : MonoBehaviour , IDamage
 
     void PlayerMovement()
     {
-        float XDir = Input.GetAxis("Horizontal");
-        float ZDir = Input.GetAxis("Vertical");
-        Vector3 MoveDir = new Vector3(XDir, 0.0f, ZDir);
-        transform.position += MoveDir * PlayerSpeed * Time.deltaTime;
-        if (MoveDir != Vector3.zero)
+        if (sleepDone.canmove == true)
         {
-            transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(MoveDir), RotationSpeed * Time.deltaTime);
-        }
+            float XDir = Input.GetAxis("Horizontal");
+            float ZDir = Input.GetAxis("Vertical");
+            Vector3 MoveDir = new Vector3(XDir, 0.0f, ZDir);
+            transform.position += MoveDir * PlayerSpeed * Time.deltaTime;
+            if (MoveDir != Vector3.zero)
+            {
+                transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(MoveDir), RotationSpeed * Time.deltaTime);
+            }
 
-        if (Input.GetAxis("Horizontal") != 0 || Input.GetAxis("Vertical") != 0 && PlayerSpeed != 0)
-        {
-            PlayerAnim.SetBool("IsWalking", true);
-        }
-        else
-        {
-            PlayerAnim.SetBool("IsWalking", false);
+            if (Input.GetAxis("Horizontal") != 0 || Input.GetAxis("Vertical") != 0 && PlayerSpeed != 0)
+            {
+                PlayerAnim.SetBool("IsWalking", true);
+            }
+            else
+            {
+                PlayerAnim.SetBool("IsWalking", false);
+            }
         }
     }
 

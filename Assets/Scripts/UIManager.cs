@@ -34,8 +34,10 @@ public class UIManager : MonoBehaviour
     //public int daysSurvived;
     public static int currentDay;
     private AudioSource ambience;
-    private float backgroundVolume = 0.2f;
+    private float backgroundVolume = 1f;
     private float selectedVolume;
+    [SerializeField]
+    private AudioClip menuClip,gameClip;
     private void Awake()
     {
         Instance = this;
@@ -111,12 +113,18 @@ public class UIManager : MonoBehaviour
         Time.timeScale = 1f;
         pauseMenu.SetActive(false);
         abilitybar.SetActive(true);
+        ambience.Stop();
+        ambience.clip = gameClip;
+        ambience.Play();
     }
     public void PauseButton()
     {
         //keeping the value of the selected backgroundVolue to re-adjust after pause
         selectedVolume = backgroundVolume;
-        SetAmbienceVolume(0);
+        //SetAmbienceVolume(0);
+        ambience.Stop();
+        ambience.clip = menuClip;
+        ambience.Play();
         Time.timeScale = 0f;
         pauseMenu.SetActive(true);
         abilitybar.SetActive(false);

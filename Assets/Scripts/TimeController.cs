@@ -63,7 +63,7 @@ public class TimeController : MonoBehaviour
 
     public void UpdateTime()
     {
-        currentTimeOfDay = 1.0f;
+        currentTimeOfDay = 0.3f;//1
     }
 
     private bool ActivateLight(float time)
