@@ -17,7 +17,7 @@ public class VitalStats : MonoBehaviour
     private float minimum = 0f;
     private float foodInterval = 0.5f;
     private float waterInterval = 1.0f;
-    private float hpLossInterval = 0.05f;
+    private float hpLossInterval = 0.1f;
     private float hpCurrentAmount;
     private float foodCurrentAmount;
     private float waterCurrentAmount;
