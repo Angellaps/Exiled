@@ -8,19 +8,22 @@ public class VitalStats : MonoBehaviour
     [SerializeField] FoodSO mushroom;
     public Image foodfill,waterfill;
     public Image empty;
-    public GameObject alternate;
-    public Text foodfillText, waterfillText;
-    private int foodPercentage, waterPercentage;
+    public GameObject emptyFood;
+    public GameObject emptyWater;
+    public Text foodfillText, waterfillText, hpText;
+    private int foodPercentage, waterPercentage,hpPercentage;
+    private float hpMaximum = 100.0f;
     private float maximum = 100.0f;
     private float minimum = 0f;
     private float foodInterval = 0.5f;
     private float waterInterval = 1.0f;
-    private float hpLossInterval = 0.25f;
-    private float currentAmount;
+    private float hpLossInterval = 0.05f;
+    private float hpCurrentAmount;
     private float foodCurrentAmount;
     private float waterCurrentAmount;
     private float foodCurrentAmountPercentage;
     private float waterCurrentAmountPercentage;
+    private float hpCurrentAmountPercentage;
     [SerializeField]
     private Outline UIoutline;
     private Player player;
@@ -33,11 +36,14 @@ public class VitalStats : MonoBehaviour
     private void Start()
     {
         PlayerAnim = GetComponent<Animator>();
-        //currentAmount = maximum;
+        hpCurrentAmount = player.PlayerLife;
+        hpCurrentAmountPercentage = hpCurrentAmount / hpMaximum;
         foodCurrentAmount = maximum;
         waterCurrentAmount = maximum;
         UIoutline.enabled = false;
         //alternate.transform.Find("StarvingIcon").gameObject.SetActive(true);
+        //emptyFood.transform.Find("StarvingIcon").gameObject.SetActive(true);
+        //emptyWater.transform.Find("DehydrationIcon").gameObject.SetActive(true);
         this.transform.GetChild(0).gameObject.SetActive(false);
 
     }
@@ -47,12 +53,28 @@ public class VitalStats : MonoBehaviour
         {
             foodCurrentAmount -= foodInterval * Time.deltaTime;
             foodCurrentAmountPercentage = foodCurrentAmount / maximum;
+            emptyFood.SetActive(false);
         }
+        else
+        {
+            emptyFood.SetActive(true);
+            hpCurrentAmount -= hpLossInterval * Time.deltaTime;
+            hpCurrentAmountPercentage = hpCurrentAmount / hpMaximum;
+        }
+
         if (waterCurrentAmount > minimum)
         {
             waterCurrentAmount -= waterInterval * Time.deltaTime;
             waterCurrentAmountPercentage = waterCurrentAmount / maximum;
+            emptyWater.SetActive(false);
         }
+        else
+        {
+            emptyWater.SetActive(true);
+            hpCurrentAmount -= hpLossInterval * Time.deltaTime;
+            hpCurrentAmountPercentage = hpCurrentAmount / hpMaximum;
+        }
+
         if (Input.GetKeyDown(KeyCode.F))
         {
             //transform.LookAt(hitObject.transform);
@@ -73,12 +95,14 @@ public class VitalStats : MonoBehaviour
 
         foodPercentage = ((int)(foodCurrentAmountPercentage * 100f));
         waterPercentage = ((int)(waterCurrentAmountPercentage * 100f));
+        hpPercentage = ((int)(hpCurrentAmountPercentage * 100f));
+        hpText.text= (hpPercentage + "%");
         foodfillText.text = (foodPercentage + "%");
         foodfill.fillAmount = foodCurrentAmountPercentage;
         waterfillText.text = (waterPercentage + "%");
         waterfill.fillAmount = waterCurrentAmountPercentage;
 
-        player.StatusSystem(foodCurrentAmount, waterCurrentAmountPercentage);
+        player.StatusSystem(foodCurrentAmount, waterCurrentAmount,hpCurrentAmount);
     }
 
 }

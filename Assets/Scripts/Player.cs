@@ -49,7 +49,7 @@ public class Player : MonoBehaviour , IDamage
     private void Update()
     {
         AttackTimer += Time.deltaTime;
-        StatusSystem(PlayerHunger, PlayerThirst);
+        StatusSystem(PlayerHunger, PlayerThirst,PlayerLife);
         PlayerMovement();
         LeftClickAction();
         //RightClickAction();
@@ -147,10 +147,11 @@ public class Player : MonoBehaviour , IDamage
         Destroy(obj);
     }
 
-    public void StatusSystem(float hunger, float thirst)
+    public void StatusSystem(float hunger, float thirst,float hp)
     {
         PlayerHunger = hunger;
         PlayerThirst = thirst;
+        PlayerLife = hp;//untested
         //Debug.Log(PlayerHunger);
         //Calculate player status such as Life , Hunger , Water , Sanity etc.
     }

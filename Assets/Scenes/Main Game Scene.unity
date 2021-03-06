@@ -52867,9 +52867,11 @@ MonoBehaviour:
   foodfill: {fileID: 1404484042}
   waterfill: {fileID: 828369120}
   empty: {fileID: 0}
-  alternate: {fileID: 966546957}
+  emptyFood: {fileID: 968845426}
+  emptyWater: {fileID: 966546957}
   foodfillText: {fileID: 758887459}
   waterfillText: {fileID: 1381103989}
+  hpText: {fileID: 1754362819}
   UIoutline: {fileID: 1091118811}
 --- !u!114 &1091118811
 MonoBehaviour:
@@ -57477,9 +57479,11 @@ MonoBehaviour:
   foodfill: {fileID: 1404484042}
   waterfill: {fileID: 828369120}
   empty: {fileID: 0}
-  alternate: {fileID: 968845426}
+  emptyFood: {fileID: 968845426}
+  emptyWater: {fileID: 966546957}
   foodfillText: {fileID: 758887459}
   waterfillText: {fileID: 1381103989}
+  hpText: {fileID: 1754362819}
   UIoutline: {fileID: 1172072768}
 --- !u!114 &1172072768
 MonoBehaviour:
@@ -92885,8 +92889,8 @@ Light:
   m_Type: 2
   m_Shape: 0
   m_Color: {r: 1, g: 0.6360003, b: 0.3820755, a: 1}
-  m_Intensity: 1
-  m_Range: 10
+  m_Intensity: 1.2
+  m_Range: 100
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
   m_CookieSize: 10
