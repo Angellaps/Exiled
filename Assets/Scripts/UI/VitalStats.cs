@@ -81,6 +81,10 @@ public class VitalStats : MonoBehaviour
             player.PlayerAnim.SetBool("IsGathering", true);
             Debug.Log("+20");
             foodCurrentAmount += mushroom.HealValue;
+            if (foodCurrentAmount > maximum)
+            {
+                foodCurrentAmount = maximum;
+            }
             Debug.Log(foodCurrentAmount);
             //put a delay for the animator cause it stops immediately, need to convert scripts cause its total mess
             //no proximity check atm, there is one in the player script. doesn't update hunger value though
