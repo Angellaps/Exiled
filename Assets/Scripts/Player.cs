@@ -51,7 +51,7 @@ public class Player : MonoBehaviour , IDamage
     private void Update()
     {
         AttackTimer += Time.deltaTime;
-        StatusSystem(PlayerHunger, PlayerThirst,PlayerLife);
+        //StatusSystem(PlayerHunger, PlayerThirst,PlayerLife);
         PlayerMovement();
         LeftClickAction();
         //RightClickAction();
@@ -152,14 +152,14 @@ public class Player : MonoBehaviour , IDamage
         Destroy(obj);
     }
 
-    public void StatusSystem(float hunger, float thirst,float hp)
-    {
-        PlayerHunger = hunger;
-        PlayerThirst = thirst;
-        PlayerLife = hp;//untested
-        //Debug.Log(PlayerHunger);
-        //Calculate player status such as Life , Hunger , Water , Sanity etc.
-    }
+    //public void StatusSystem(float hunger, float thirst,float hp)
+    //{
+    //    PlayerHunger = hunger;
+    //    PlayerThirst = thirst;
+    //    PlayerLife = hp;//untested
+    //    //Debug.Log(PlayerHunger);
+    //    //Calculate player status such as Life , Hunger , Water , Sanity etc.
+    //}
 
     //void GatherResources()
     //{
@@ -205,7 +205,7 @@ public class Player : MonoBehaviour , IDamage
         }
         if (other.CompareTag("RangedEnemy"))
         {
-            enemiesInRange.Remove(other.gameObject);
+            enemiesInRange.Add(other.gameObject);
         }
         if (other.CompareTag("Consumable"))
         {
@@ -220,7 +220,6 @@ public class Player : MonoBehaviour , IDamage
         {
             interactablesInRange.Remove(other.gameObject);
         }
-
         if (other.CompareTag("MeleeEnemy"))
         {
             enemiesInRange.Remove(other.gameObject);

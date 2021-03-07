@@ -21,7 +21,7 @@ public class EnemyRangedScript : MonoBehaviour , IDamage
     public LayerMask WhatsGround, WhatsPlayer;
 
     public float EnemyHp;
-
+    public Transform AttPoint;
     //Patrol Variables
     public Vector3 RandomPatrolPoint;
     bool PatrolPointSet;
@@ -95,7 +95,8 @@ public class EnemyRangedScript : MonoBehaviour , IDamage
     public void AttackPlayer()
     {
         EnemyAnimRanged.SetBool("Walk Forward", false);
-        EnemyAnimRanged.SetBool("Cast Spell", true);
+        //EnemyAnimRanged.SetBool("Cast Spell", true);
+        
         //Make enemy stanionary to attack
         EnemyAgent.SetDestination(EnemyAgent.transform.position);
 
@@ -103,20 +104,22 @@ public class EnemyRangedScript : MonoBehaviour , IDamage
 
         if (!HaveAttacked)
         {
+            EnemyAnimRanged.SetTrigger("Cast Spell");
             //Ranged Attack 
-            Rigidbody EnemyRB = Instantiate(projectile, transform.position, Quaternion.identity).GetComponent<Rigidbody>();
-            EnemyRB.AddForce(transform.forward * 32f, ForceMode.Impulse);
-            EnemyRB.AddForce(transform.up * 8f, ForceMode.Impulse);
+            Rigidbody EnemyRB = Instantiate(projectile, AttPoint.position, Quaternion.identity).GetComponent<Rigidbody>();
+            EnemyRB.AddForce(transform.forward * 5f, ForceMode.Impulse);
+            EnemyRB.AddForce(transform.up * 2f, ForceMode.Impulse);
 
 
             HaveAttacked = true;
             Invoke(nameof(ResetAttack), AttackTimer);
+            //EnemyAnimRanged.SetBool("Cast Spell", false);
         }
     }
     private void ResetAttack()
     {
         HaveAttacked = false;
-        EnemyAnimRanged.SetBool("Stab Attack", false);
+        //EnemyAnimRanged.SetBool("Cast Spell", false);
     }
 
     public void TakeDamage()

@@ -11,8 +11,9 @@ public class ProjectileDamage : MonoBehaviour
         if (other.gameObject.CompareTag("Player"))
         {
             other.GetComponent<Player>().PlayerLife -= damage;
+            Destroy(gameObject);
         }
-        else
+        if (other.gameObject.CompareTag("Ground") || other.gameObject.CompareTag("Interactable"))
         {
             Destroy(gameObject);
         }

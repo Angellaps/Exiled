@@ -128,7 +128,6 @@ public class EnemyMeleeAI: MonoBehaviour , IDamage
         //Make enemy stanionary to attack
         //EnemyAgent.SetDestination(EnemyAgent.transform.position);
         transform.LookAt(PlayerCharacter);
-
         Collider[] HitCollisions = Physics.OverlapSphere(transform.position, AttackRadius);
         foreach (var player in HitCollisions)
         {
@@ -138,7 +137,6 @@ public class EnemyMeleeAI: MonoBehaviour , IDamage
                 if (HaveAttacked == false)
                 {          
                     player.GetComponent<Player>().PlayerLife-=damage;
-                    
                     HaveAttacked = true;
                     Invoke(nameof(ResetAttack), AttackTimer);
                 }

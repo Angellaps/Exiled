@@ -106,7 +106,7 @@ public class VitalStats : MonoBehaviour
         waterfillText.text = (waterPercentage + "%");
         waterfill.fillAmount = waterCurrentAmountPercentage;
 
-        player.StatusSystem(foodCurrentAmount, waterCurrentAmount,hpCurrentAmount);
+        //player.StatusSystem(foodCurrentAmount, waterCurrentAmount,hpCurrentAmount);
     }
 
 }
