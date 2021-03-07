@@ -17,13 +17,13 @@ public class VitalStats : MonoBehaviour
     private float minimum = 0f;
     private float foodInterval = 0.5f;
     private float waterInterval = 1.0f;
-    private float hpLossInterval = 0.1f;
-    private float hpCurrentAmount;
+    private float hpLossInterval = 1.0f;
     private float foodCurrentAmount;
     private float waterCurrentAmount;
     private float foodCurrentAmountPercentage;
     private float waterCurrentAmountPercentage;
     private float hpCurrentAmountPercentage;
+    public float hpCurrentAmount;
     [SerializeField]
     private Outline UIoutline;
     private Player player;
@@ -32,34 +32,31 @@ public class VitalStats : MonoBehaviour
     private void Awake()
     {
         player = GameObject.FindObjectOfType<Player>();
+        hpCurrentAmount = 100;
     }
     private void Start()
     {
         PlayerAnim = GetComponent<Animator>();
-        hpCurrentAmount = player.PlayerLife;
-        hpCurrentAmountPercentage = hpCurrentAmount / hpMaximum;
         foodCurrentAmount = maximum;
         waterCurrentAmount = maximum;
         UIoutline.enabled = false;
-        //alternate.transform.Find("StarvingIcon").gameObject.SetActive(true);
-        //emptyFood.transform.Find("StarvingIcon").gameObject.SetActive(true);
-        //emptyWater.transform.Find("DehydrationIcon").gameObject.SetActive(true);
         this.transform.GetChild(0).gameObject.SetActive(false);
 
     }
     private void Update()
     {
+        hpCurrentAmount = player.PlayerLife;
+        hpCurrentAmountPercentage = player.PlayerLife / hpMaximum;
         if (foodCurrentAmount > minimum)
         {
             foodCurrentAmount -= foodInterval * Time.deltaTime;
             foodCurrentAmountPercentage = foodCurrentAmount / maximum;
             emptyFood.SetActive(false);
         }
-        else
+        else if (foodCurrentAmount <= minimum)
         {
             emptyFood.SetActive(true);
             hpCurrentAmount -= hpLossInterval * Time.deltaTime;
-            hpCurrentAmountPercentage = hpCurrentAmount / hpMaximum;
         }
 
         if (waterCurrentAmount > minimum)
@@ -68,11 +65,10 @@ public class VitalStats : MonoBehaviour
             waterCurrentAmountPercentage = waterCurrentAmount / maximum;
             emptyWater.SetActive(false);
         }
-        else
+        else if (waterCurrentAmount <= minimum)
         {
             emptyWater.SetActive(true);
             hpCurrentAmount -= hpLossInterval * Time.deltaTime;
-            hpCurrentAmountPercentage = hpCurrentAmount / hpMaximum;
         }
 
         if (Input.GetKeyDown(KeyCode.F))
@@ -86,27 +82,22 @@ public class VitalStats : MonoBehaviour
                 foodCurrentAmount = maximum;
             }
             Debug.Log(foodCurrentAmount);
-            //put a delay for the animator cause it stops immediately, need to convert scripts cause its total mess
-            //no proximity check atm, there is one in the player script. doesn't update hunger value though
+            //need put a delay for the animator cause it stops immediately
+            //no proximity check atm
             player.PlayerAnim.SetBool("IsGathering", false);
-
-            //foodfillText.text = (foodPercentage + "%");
         }
-        /*else
-        {
-            PlayerAnim.SetBool("IsGathering", false);
-        }*/
 
         foodPercentage = ((int)(foodCurrentAmountPercentage * 100f));
         waterPercentage = ((int)(waterCurrentAmountPercentage * 100f));
         hpPercentage = ((int)(hpCurrentAmountPercentage * 100f));
-        hpText.text= (hpPercentage + "%");
+        hpText.text = (hpPercentage + "%");
         foodfillText.text = (foodPercentage + "%");
         foodfill.fillAmount = foodCurrentAmountPercentage;
         waterfillText.text = (waterPercentage + "%");
         waterfill.fillAmount = waterCurrentAmountPercentage;
-
-        //player.StatusSystem(foodCurrentAmount, waterCurrentAmount,hpCurrentAmount);
+        Debug.Log("to food" + foodCurrentAmount);
+        Debug.Log("to water" + waterCurrentAmount);
+        player.StatusSystem(foodCurrentAmount, waterCurrentAmount, hpCurrentAmount);
     }
 
 }

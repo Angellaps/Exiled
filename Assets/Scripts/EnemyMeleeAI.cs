@@ -95,34 +95,7 @@ public class EnemyMeleeAI: MonoBehaviour , IDamage
 
     public void AttackPlayer()
     {
-        #region OldAttack 
-        //if (AttackDistance<=3f)
-        //{
-
-        //EnemyAnim.SetBool("Walk Forward", false);
-        //EnemyAnim.SetBool("Stab Attack", true);
-        ////Make enemy stanionary to attack
-        //EnemyAgent.SetDestination(EnemyAgent.transform.position);
-
-        //transform.LookAt(PlayerCharacter);
-
-        //if (!HaveAttacked)
-        //{
-
-        //    player.MeleeTakeDamage();
-
-
-        //    //Ranged Attack 
-        //    //Rigidbody EnemyRB = Instantiate(projectile, transform.position, Quaternion.identity).GetComponent<Rigidbody>();
-        //    //EnemyRB.AddForce(transform.forward * 32f, ForceMode.Impulse);
-        //    //EnemyRB.AddForce(transform.up * 8f, ForceMode.Impulse);
-
-
-        //    HaveAttacked = true;
-        //    Invoke(nameof(ResetAttack), AttackTimer);
-        //}
-        //}
-        #endregion
+  
         EnemyAnim.SetBool("Walk Forward", false);
         EnemyAnim.SetBool("Stab Attack", true);
         //Make enemy stanionary to attack
@@ -137,6 +110,7 @@ public class EnemyMeleeAI: MonoBehaviour , IDamage
                 if (HaveAttacked == false)
                 {          
                     player.GetComponent<Player>().PlayerLife-=damage;
+                    player.GetComponent<VitalStats>().hpCurrentAmount -= damage;
                     HaveAttacked = true;
                     Invoke(nameof(ResetAttack), AttackTimer);
                 }

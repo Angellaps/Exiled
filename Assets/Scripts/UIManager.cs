@@ -26,9 +26,10 @@ public class UIManager : MonoBehaviour
     private Button restartGameBtn;
     bool inventoryUIEnabled = false;
     [SerializeField]
-    private TextMeshProUGUI deathDaysSurvivedText,daysSurvivedText, pauseText;
+    private TextMeshProUGUI deathDaysSurvivedText, daysSurvivedText, pauseText, changeDaysSurvivedText;
     public static int currentDay;
     private soundManager ambience;
+    public static int changeDaysSurvived;
 
     private void Awake()
     {
@@ -44,8 +45,10 @@ public class UIManager : MonoBehaviour
 
     public void UpdateTimeVisual()
     {
+        changeDaysSurvived = currentDay;
         daysSurvivedText.text = " Days Survived " + currentDay;
         deathDaysSurvivedText.text = " Days Survived " + currentDay;
+        changeDaysSurvivedText.text= " Days Survived " + currentDay; 
     }
 
     public void Update()

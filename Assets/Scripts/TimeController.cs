@@ -13,11 +13,15 @@ public class TimeController : MonoBehaviour
     [Range(0, 1)] [SerializeField] private float currentTimeOfDay = 0.5f;
     private float timeMultiplier = 1f;
     private float sunInitialIntesity;
-    private int daysSurvived,startingDaysSurvived;
-
+    public int daysSurvived,startingDaysSurvived;
+    [SerializeField]
+    private GameObject daysbar;
+    private AudioSource dayChangedSound;
+    public AudioClip changeDayClip;
     private void Awake()
     {
         uiManager = GameObject.FindObjectOfType<UIManager>();
+        dayChangedSound = GetComponent<AudioSource>();
     }
     private void Start()
     {
@@ -29,20 +33,19 @@ public class TimeController : MonoBehaviour
     {
         UpdateSun();
         ActivateLight(currentTimeOfDay);
-        //currentTimeOfDay += (Time.deltaTime / secondsInFullDay) * timeMultiplier;
 
         if(currentTimeOfDay >= 1)
         {
             currentTimeOfDay = 0;
             daysSurvived++;
+
             if (daysSurvived != startingDaysSurvived)
             {
-                //UIManager.currentDay = daysSurvived;
                 UIManager.currentDay = daysSurvived;
                 uiManager.UpdateTimeVisual();
-                //UIManager.UpdateTimeVisual();
                 startingDaysSurvived++;
             }
+            StartCoroutine(TimeMessageDisplay(6));
             //OnDayChanged?.Invoke(UpdateTime(), EventArgs.Empty);
         }
         currentTimeOfDay += (Time.deltaTime / secondsInFullDay) * timeMultiplier;
@@ -63,7 +66,7 @@ public class TimeController : MonoBehaviour
 
     public void UpdateTime()
     {
-        currentTimeOfDay = 0.3f;//1
+        currentTimeOfDay = 0.3f;
     }
 
     private bool ActivateLight(float time)
@@ -98,6 +101,14 @@ public class TimeController : MonoBehaviour
         }
 
         sun.intensity = sunInitialIntesity * intesityMultiplier;
+    }
+    IEnumerator TimeMessageDisplay(float time)
+    {
+        daysbar.SetActive(true);
+        dayChangedSound.PlayOneShot(changeDayClip);
+        yield return new WaitForSeconds(time);
+        dayChangedSound.Stop();
+        daysbar.SetActive(false);
     }
 
 }

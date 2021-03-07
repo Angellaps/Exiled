@@ -51,13 +51,9 @@ public class Player : MonoBehaviour , IDamage
     private void Update()
     {
         AttackTimer += Time.deltaTime;
-        //StatusSystem(PlayerHunger, PlayerThirst,PlayerLife);
+        StatusSystem(PlayerHunger, PlayerThirst,PlayerLife);
         PlayerMovement();
         LeftClickAction();
-        //RightClickAction();
-        //GatherResources();
-        //StatusSystem();
-
         //DEATH CHECK
         if (PlayerLife <= 0) {
             PlayerDiedEndGame();
@@ -91,17 +87,12 @@ public class Player : MonoBehaviour , IDamage
 
     void LeftClickAction()
     {
-
-        //TO DO: Move this to the AXE Scriptable object's left click
-
         if (Input.GetMouseButtonDown(0) && AttackTimer >= 1.0f)
         {
 
             //LookAtPointOfInterest();
-            //PlayerSpeed = 0f;
             AttackTimer = 0f;
             AttackTimer += Time.deltaTime;
-            //Debug.Log(AttackTimer);
             Debug.Log("Attack Pressed");
             PlayerAnim.SetTrigger("Attack");
             Ray ray = cam.ScreenPointToRay(Input.mousePosition);
@@ -121,18 +112,15 @@ public class Player : MonoBehaviour , IDamage
             }
             ///!!!! REWORK ENEMY SCRIPTS TO HAVE A UNIVERSAL TAKE DAMAGE METHOD
             foreach (GameObject enemy in EnemiesInFront(enemiesInRange))
-            {
-                
+            {          
                 //Placeholder mexri na katharisei ta scripts twn enemies o thodoris
                 if (enemy.GetComponent<EnemyScript>()!= null)
                 {
                     Debug.Log("I dealt damage");                    
                     enemy.GetComponent<EnemyScript>().TakeDamage();
                     //enemy.GetComponent<EnemyMeleeAI>().TakeDamage();
-                }
-                
+                }                
             }
-
         }
         else
         {
@@ -143,7 +131,6 @@ public class Player : MonoBehaviour , IDamage
             }
         }
     }
-
     //Delay the destruction of Interactable to line up with the animation WIP
     IEnumerator WaitAndDestroy(GameObject obj, float time)
     {
@@ -151,16 +138,13 @@ public class Player : MonoBehaviour , IDamage
         yield return new WaitForSeconds(time);
         Destroy(obj);
     }
-
-    //public void StatusSystem(float hunger, float thirst,float hp)
-    //{
-    //    PlayerHunger = hunger;
-    //    PlayerThirst = thirst;
-    //    PlayerLife = hp;//untested
-    //    //Debug.Log(PlayerHunger);
-    //    //Calculate player status such as Life , Hunger , Water , Sanity etc.
-    //}
-
+    public void StatusSystem(float hunger, float thirst, float hp)
+    {
+        hp = GetComponent<VitalStats>().hpCurrentAmount;
+        PlayerLife = hp;
+        //player status such as Life , Hunger , Water
+    }
+    #region unimplemented Gather
     //void GatherResources()
     //{
     //    if (Input.GetKeyDown(KeyCode.F))
@@ -190,7 +174,7 @@ public class Player : MonoBehaviour , IDamage
     //    }
 
     //}
-
+    #endregion
     public void OnTriggerEnter(Collider other)
     {
         //Add Interactables and enemies in range (vacuum sphere) into lists
