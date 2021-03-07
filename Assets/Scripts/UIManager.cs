@@ -18,7 +18,6 @@ public class UIManager : MonoBehaviour
     public Sprite swordSprite;
     public Sprite fistsSprite;
     public Sprite healthPotionSprite;
-
     public InventorySO playerInventory;
     public GameObject inventoryUI;
     [SerializeField]
@@ -26,27 +25,20 @@ public class UIManager : MonoBehaviour
     [SerializeField]
     private Button restartGameBtn;
     bool inventoryUIEnabled = false;
-
     [SerializeField]
     private TextMeshProUGUI deathDaysSurvivedText,daysSurvivedText, pauseText;
-    //private soundManager soundmanager;
-
     public static int currentDay;
-    private AudioSource ambience;
-    //private float backgroundVolume = 1f;
-    //private float selectedVolume;
-    //[SerializeField]
-    //private AudioClip menuClip,gameClip;
+    private soundManager ambience;
+
     private void Awake()
     {
         Instance = this;
     }
     private void Start()
     {
-        //selectedVolume = backgroundVolume;
         hotkeyManager = new HotkeyManager(playerWeapons);
         hotkeyBar.SetHotkeyBar(hotkeyManager);
-        ambience = GetComponent<AudioSource>();
+        ambience = FindObjectOfType<soundManager>();
         UpdateTimeVisual();
     }
 
@@ -58,7 +50,6 @@ public class UIManager : MonoBehaviour
 
     public void Update()
     {
-        //ambience.volume = backgroundVolume;
         hotkeyManager.Update();
         if (inventoryUIEnabled)
         {
@@ -87,29 +78,14 @@ public class UIManager : MonoBehaviour
 
     public void ResumeGame()
     {
-        //soundManager.Instance.SetAmbienceVolume()
-        //SetAmbienceVolume(selectedVolume);
         Time.timeScale = 1f;
         pauseMenu.SetActive(false);
         abilitybar.SetActive(true);
-        //soundManager.Instance.PlayGameSound();
-        //soundManager.Instance.PlayGameSoundx(soundManager.Instance.gameClip);
-        soundManager.Instance.PlayGameSoundx(soundManager.Instance.gameClip, soundManager.Instance.menuClip);
-        //ambience.Stop();
-        //ambience.clip = gameClip;
-        //ambience.Play();
+        ambience.ChangeClip();
     }
     public void PauseButton()
     {
-        //keeping the value of the selected backgroundVolue to re-adjust after pause
-        //selectedVolume = backgroundVolume;
-        //SetAmbienceVolume(0);
-        //ambience.Stop();
-        //ambience.clip = menuClip;
-        //ambience.Play();
-        //soundManager.Instance.PlayMenuSound();
-        //soundManager.Instance.PlayGameSoundx(soundManager.Instance.menuClip);
-        soundManager.Instance.PlayGameSoundx(soundManager.Instance.menuClip, soundManager.Instance.gameClip);
+        ambience.ChangeClip();
         Time.timeScale = 0f;
         pauseMenu.SetActive(true);
         abilitybar.SetActive(false);
@@ -134,10 +110,6 @@ public class UIManager : MonoBehaviour
         restartGameBtn.onClick.AddListener(() => OnReloadSceneButton());
         Time.timeScale = 0f;
     }
-    /*public void SetAmbienceVolume(float vol)
-    {
-        backgroundVolume = vol;
-    }*/
  
 }
 
