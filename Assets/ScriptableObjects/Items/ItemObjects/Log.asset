@@ -19,4 +19,4 @@ MonoBehaviour:
   itemID: 3
   maxAmount: 100
   isStackable: 1
-  itemDescription: 
+  itemDescription: log

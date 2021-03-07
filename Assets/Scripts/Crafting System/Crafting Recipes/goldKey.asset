@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 357eb6eedc6c2264883bab7eb5084418, type: 3}
+  m_Name: goldKey
+  m_EditorClassIdentifier: 
+  Materials:
+  - Item: {fileID: 11400000, guid: 96ccccf61285e6348a3c83a1f3c44619, type: 2}
+    Amount: 1000
+  - Item: {fileID: 11400000, guid: a8213569df6f2784f93592ed88adecff, type: 2}
+    Amount: 1000
+  Results:
+  - Item: {fileID: 11400000, guid: 33f3dc3882ba5424284a019c37438bb5, type: 2}
+    Amount: 1
+  inventoryAddClip: {fileID: 8300000, guid: 6069f7303c1a86e45bbfe199fbe2162e, type: 3}
+  player: {fileID: 1256756805690999422, guid: d6ffc7a68b46ea349a9e7b7fcb479942, type: 3}

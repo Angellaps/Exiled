@@ -7,7 +7,7 @@ using System;
 public struct ItemAmount
 {
     public ItemSO Item;
-    [Range(1, 9)]
+    [Range(1, 1001)]
     public int Amount;
 }
 

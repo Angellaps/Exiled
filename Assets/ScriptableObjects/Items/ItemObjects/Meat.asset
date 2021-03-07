@@ -19,5 +19,5 @@ MonoBehaviour:
   itemID: 2
   maxAmount: 20
   isStackable: 1
-  itemDescription: 
+  itemDescription: meat
   HealValue: 15

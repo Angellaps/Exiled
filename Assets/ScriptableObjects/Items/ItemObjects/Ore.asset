@@ -19,4 +19,4 @@ MonoBehaviour:
   itemID: 0
   maxAmount: 0
   isStackable: 0
-  itemDescription: 
+  itemDescription: stone

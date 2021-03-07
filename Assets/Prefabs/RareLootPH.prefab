@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 1717244120954156619}
   - component: {fileID: 1717244120954156612}
   - component: {fileID: 3494835038091206693}
+  - component: {fileID: 1170220856904428673}
   m_Layer: 0
   m_Name: RareLootPH
   m_TagString: Loot
@@ -110,6 +111,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 0}
   playerInventory: {fileID: 11400000, guid: 9b164f4267ebb0b4b9a345c3d6bed4b8, type: 2}
+  lootClip: {fileID: 8300000, guid: 6069f7303c1a86e45bbfe199fbe2162e, type: 3}
 --- !u!54 &3494835038091206693
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -126,3 +128,17 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &1170220856904428673
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1716126245766777089}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 41d6d0ac767a3da4787b14f5a726864c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  item: {fileID: 11400000, guid: f68bcf41438d2c647b00fc2362cb1789, type: 2}
+  amount: 0
