@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class EnemyRangedScript : MonoBehaviour , IDamage
+public class EnemyRangedScript : MonoBehaviour
 {
     public float speed = 0f;
     public float damage = 0f;
@@ -22,17 +22,18 @@ public class EnemyRangedScript : MonoBehaviour , IDamage
 
     public float EnemyHp;
     public Transform AttPoint;
-    //Patrol Variables
+
+    //Variables used for the patrol method
     public Vector3 RandomPatrolPoint;
     bool PatrolPointSet;
     public float PatrolPointRange;
 
-    //Attack Variables
+    //Variables used to control Attack parameters
     public float AttackTimer;
     bool HaveAttacked;
     public GameObject projectile;
 
-    //Different States
+    //Checks for the different states 
     public float DetectionRange, AttackDistance;
     public bool PlayerInRange, PlayerInAttRange;
 
@@ -43,7 +44,7 @@ public class EnemyRangedScript : MonoBehaviour , IDamage
     }
     private void Start()
     {
-        speed = GetComponent<NavMeshAgent>().speed; ;
+        speed = GetComponent<NavMeshAgent>().speed;
         EnemyHp = 20f;
         EnemyAnimRanged = GetComponent<Animator>();
         EnemyAnimRanged.SetFloat("AnimSpeed", speed);
@@ -51,7 +52,7 @@ public class EnemyRangedScript : MonoBehaviour , IDamage
 
     private void Update()
     {
-        //Check Player seen distance and attack distance
+        //Checks for the player's distance and conditions that change the states based on range
         PlayerInRange = Physics.CheckSphere(transform.position, DetectionRange, WhatsPlayer);
         PlayerInAttRange = Physics.CheckSphere(transform.position, AttackDistance, WhatsPlayer);
 
@@ -70,13 +71,13 @@ public class EnemyRangedScript : MonoBehaviour , IDamage
 
         Vector3 CalcDistancetoPatrolPoint = transform.position - RandomPatrolPoint;
 
-        //WHen patrol point is reached
+        //When patrol point is reached
         if (CalcDistancetoPatrolPoint.magnitude < 1f)
             PatrolPointSet = false;
     }
     public void SearchWalkPoint()
     {
-        //Make enemy find random patrol points around him
+        //Make enemy find random patrol points around him then set a raycast to that point
         float ZAxisMove = Random.Range(-PatrolPointRange, PatrolPointRange);
         float XAxisMove = Random.Range(-PatrolPointRange, PatrolPointRange);
 
@@ -86,18 +87,17 @@ public class EnemyRangedScript : MonoBehaviour , IDamage
             PatrolPointSet = true;
     }
 
+    //Simple state that overrides the destination of the enemy to the player's position
     private void ChasePlayer()
     {
         EnemyAnimRanged.SetBool("Walk Forward", true);
         EnemyAgent.SetDestination(PlayerCharacter.position);
     }
 
+    //Attack behavior , checks for attack timer and makes the enemy look at the player it is attacking and stopping it in place during the attack
     public void AttackPlayer()
     {
         EnemyAnimRanged.SetBool("Walk Forward", false);
-        //EnemyAnimRanged.SetBool("Cast Spell", true);
-        
-        //Make enemy stanionary to attack
         EnemyAgent.SetDestination(EnemyAgent.transform.position);
 
         transform.LookAt(PlayerCharacter);
@@ -109,42 +109,22 @@ public class EnemyRangedScript : MonoBehaviour , IDamage
             Rigidbody EnemyRB = Instantiate(projectile, AttPoint.position, Quaternion.identity).GetComponent<Rigidbody>();
             EnemyRB.AddForce(transform.forward * 5f, ForceMode.Impulse);
             EnemyRB.AddForce(transform.up * 2f, ForceMode.Impulse);
-
-
             HaveAttacked = true;
             Invoke(nameof(ResetAttack), AttackTimer);
-            //EnemyAnimRanged.SetBool("Cast Spell", false);
         }
     }
     private void ResetAttack()
     {
         HaveAttacked = false;
-        //EnemyAnimRanged.SetBool("Cast Spell", false);
     }
 
-    public void TakeDamage()
-    {
-        EnemyHp -= player.PlayerDamage;
-
-        if (EnemyHp <= 0) Invoke(nameof(DestroyEnemy), 0.5f);
-    }
-    private void DestroyEnemy()
-    {
-        Monsterloot.GenerateLoot();
-        Destroy(gameObject);
-    }
-
+    //Gizmos that help visuallize the detection and attack range of the enemy
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, AttackDistance);
         Gizmos.color = Color.yellow;
         Gizmos.DrawWireSphere(transform.position, DetectionRange);
-    }
-
-    public void DealDamage()
-    {
-        throw new System.NotImplementedException();
     }
 }
 

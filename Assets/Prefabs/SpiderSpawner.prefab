@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 753666207211664162}
   - component: {fileID: 608889545152636309}
   - component: {fileID: 3366504867101475405}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: SpiderSpawner
   m_TagString: Interactable
   m_Icon: {fileID: 0}
@@ -125,6 +125,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_TagString
       value: Interactable
+      objectReference: {fileID: 0}
+    - target: {fileID: 6575227191265327523, guid: 289243a6a030926418b0da9e5c8b87d9,
+        type: 3}
+      propertyPath: m_Layer
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 6575227191265355139, guid: 289243a6a030926418b0da9e5c8b87d9,
         type: 3}
@@ -251,10 +256,35 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1927246636466840000, guid: 35de420b17628e34baa440927426cf4f,
+        type: 3}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1927246636466840002, guid: 35de420b17628e34baa440927426cf4f,
+        type: 3}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 1927246636466840006, guid: 35de420b17628e34baa440927426cf4f,
         type: 3}
       propertyPath: m_Name
       value: Egg_Green
+      objectReference: {fileID: 0}
+    - target: {fileID: 1927246636466840006, guid: 35de420b17628e34baa440927426cf4f,
+        type: 3}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4217506277723823025, guid: 35de420b17628e34baa440927426cf4f,
+        type: 3}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4217506278448011300, guid: 35de420b17628e34baa440927426cf4f,
+        type: 3}
+      propertyPath: m_Layer
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 35de420b17628e34baa440927426cf4f, type: 3}

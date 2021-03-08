@@ -13,18 +13,13 @@ public class EnemyScript : MonoBehaviour
     public float EnemyLife;
     public float damage = 15f;
 
-    // Start is called before the first frame update
+   
     void Start()
     {    
         EnemyLife = 20.0f;
     }
 
-    // Update is called once per frame
-    void Update()
-    {        
-     
-    }
-
+    //Handles the damage of the enemy
     public void TakeDamage()
     {
         EnemyLife -= player.PlayerDamage;
@@ -32,6 +27,7 @@ public class EnemyScript : MonoBehaviour
         if (EnemyLife<=0)
         {
             Monsterloot.GenerateLoot();
+            player.interactablesInRange.Remove(this.gameObject);
             Destroy(gameObject);
         }
     }

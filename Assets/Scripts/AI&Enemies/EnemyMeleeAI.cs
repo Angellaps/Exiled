@@ -2,7 +2,7 @@
 using UnityEngine;
 using UnityEngine.AI;
 
-public class EnemyMeleeAI: MonoBehaviour , IDamage
+public class EnemyMeleeAI: MonoBehaviour 
 {
     public float speed = 3f;
     public float AttackRadius = 3f;
@@ -22,17 +22,17 @@ public class EnemyMeleeAI: MonoBehaviour , IDamage
 
     public float EnemyHp;
 
-    //Patrol Variables
+    //Variables used for the patrol method
     public Vector3 RandomPatrolPoint;
     bool PatrolPointSet;
     public float PatrolPointRange;
 
-    //Attack Variables
+    //Variables used to control Attack parameters
     public float AttackTimer;
     bool HaveAttacked;
     public GameObject projectile;
 
-    //Different States
+    //Checks for the different states 
     public float DetectionRange, AttackDistance;
     public bool PlayerInRange, PlayerInAttRange;
 
@@ -51,8 +51,7 @@ public class EnemyMeleeAI: MonoBehaviour , IDamage
 
     private void Update()
     {
-        // float AttackDistance = Vector3.Distance(transform.position, Player.transform.position);
-        //Check Player seen distance and attack distance
+        //Checks for the player's distance and conditions that change the states based on range
         PlayerInRange = Physics.CheckSphere(transform.position, DetectionRange, WhatsPlayer);
         PlayerInAttRange = Physics.CheckSphere(transform.position, AttackDistance, WhatsPlayer);
 
@@ -77,7 +76,7 @@ public class EnemyMeleeAI: MonoBehaviour , IDamage
     }
     public void SearchWalkPoint()
     {
-        //Make enemy find random patrol points around him
+        //Make enemy find random patrol points around him then set a raycast to that point
         float ZAxisMove = Random.Range(-PatrolPointRange, PatrolPointRange);
         float XAxisMove = Random.Range(-PatrolPointRange, PatrolPointRange);
 
@@ -86,7 +85,7 @@ public class EnemyMeleeAI: MonoBehaviour , IDamage
         if (Physics.Raycast(RandomPatrolPoint, -transform.up, 2f, WhatsGround))
             PatrolPointSet = true;
     }
-
+    //Simple state that overrides the destination of the enemy to the player's position
     private void ChasePlayer()
     {
         EnemyAnim.SetBool("Walk Forward", true);
@@ -95,11 +94,9 @@ public class EnemyMeleeAI: MonoBehaviour , IDamage
 
     public void AttackPlayer()
     {
-  
+        //Attack behavior , checks for attack timer and makes the enemy look at the player it is attacking and stopping it in place during the attack
         EnemyAnim.SetBool("Walk Forward", false);
         EnemyAnim.SetBool("Stab Attack", true);
-        //Make enemy stanionary to attack
-        //EnemyAgent.SetDestination(EnemyAgent.transform.position);
         transform.LookAt(PlayerCharacter);
         Collider[] HitCollisions = Physics.OverlapSphere(transform.position, AttackRadius);
         foreach (var player in HitCollisions)
@@ -120,32 +117,13 @@ public class EnemyMeleeAI: MonoBehaviour , IDamage
     private void ResetAttack()
     {
         HaveAttacked = false;
-       // EnemyAnim.SetBool("Stab Attack", false);
     }
-
-    public void TakeDamage()
-    {
-        Debug.Log("I took damage");
-        EnemyHp -= player.PlayerDamage;
-
-        if (EnemyHp <= 0) Invoke(nameof(DestroyEnemy), 0.5f);
-    }
-    private void DestroyEnemy()
-    {
-        Monsterloot.GenerateLoot();
-        Destroy(gameObject);
-    }
-
+    //Gizmos that help visuallize the detection and attack range of the enemy
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, AttackRadius);
         Gizmos.color = Color.yellow;
         Gizmos.DrawWireSphere(transform.position, DetectionRange);
-    }
-
-    public void DealDamage()
-    {
-        throw new System.NotImplementedException();
     }
 }

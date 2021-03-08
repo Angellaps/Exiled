@@ -116,7 +116,7 @@ public class Player : MonoBehaviour , IDamage
                 //Placeholder mexri na katharisei ta scripts twn enemies o thodoris
                 if (enemy.GetComponent<EnemyScript>()!= null)
                 {
-                    Debug.Log("I dealt damage");                    
+                    Debug.Log("I dealt damage");               
                     enemy.GetComponent<EnemyScript>().TakeDamage();
                     //enemy.GetComponent<EnemyMeleeAI>().TakeDamage();
                 }                

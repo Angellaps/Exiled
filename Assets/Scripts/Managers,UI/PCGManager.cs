@@ -88,7 +88,17 @@ public class PCGManager : MonoBehaviour
             Node temp = nodes[i];
             temp.currentlyInScene += spawnCounterPerNode[i];            
             nodes[i] = temp;            
+        }        
+    }
+
+    IEnumerator BakeItASAP()
+    {
+        yield return new WaitForSeconds(10f);
+        if (NotBakedYet)
+        {
+            FindObjectOfType<NavMeshSurface>().BuildNavMesh();
+            NotBakedYet = false;
+            Debug.Log("I rebaked the cake!");
         }
-        
     }
 }
