@@ -9,9 +9,12 @@ public class SpiderSpawn : MonoBehaviour
     [SerializeField]
     Transform EnemySpawner;
     
-    void Start()
+    IEnumerator Start()
     {
+        yield return new WaitForSeconds(5f);
         Instantiate(MeleeEnemy, EnemySpawner);
         Instantiate(RangedEnemy, EnemySpawner);
     }
+
+    
 }

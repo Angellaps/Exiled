@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class VitalStats : MonoBehaviour
 {
-    [SerializeField] FoodSO mushroom;
+    //[SerializeField] FoodSO mushroom;
     public Image foodfill,waterfill;
     public Image empty;
     public GameObject emptyFood;
@@ -18,8 +18,8 @@ public class VitalStats : MonoBehaviour
     private float foodInterval = 0.5f;
     private float waterInterval = 1.0f;
     private float hpLossInterval = 1.0f;
-    private float foodCurrentAmount;
-    private float waterCurrentAmount;
+    public float foodCurrentAmount;
+    public float waterCurrentAmount;
     private float foodCurrentAmountPercentage;
     private float waterCurrentAmountPercentage;
     private float hpCurrentAmountPercentage;
@@ -39,8 +39,8 @@ public class VitalStats : MonoBehaviour
         PlayerAnim = GetComponent<Animator>();
         foodCurrentAmount = maximum;
         waterCurrentAmount = maximum;
-        UIoutline.enabled = false;
-        this.transform.GetChild(0).gameObject.SetActive(false);
+        //UIoutline.enabled = false;
+        //this.transform.GetChild(0).gameObject.SetActive(false);
 
     }
     private void Update()
@@ -71,21 +71,24 @@ public class VitalStats : MonoBehaviour
             hpCurrentAmount -= hpLossInterval * Time.deltaTime;
         }
 
-        if (Input.GetKeyDown(KeyCode.F))
-        {
-            //transform.LookAt(hitObject.transform);
-            player.PlayerAnim.SetBool("IsGathering", true);
-            Debug.Log("+20");
-            foodCurrentAmount += mushroom.HealValue;
-            if (foodCurrentAmount > maximum)
-            {
-                foodCurrentAmount = maximum;
-            }
-            Debug.Log(foodCurrentAmount);
-            //need put a delay for the animator cause it stops immediately
-            //no proximity check atm
-            player.PlayerAnim.SetBool("IsGathering", false);
-        }
+
+        
+
+        //if (Input.GetKeyDown(KeyCode.F))
+        //{
+        //    //transform.LookAt(hitObject.transform);
+        //    player.PlayerAnim.SetBool("IsGathering", true);
+        //    Debug.Log("+20");
+        //    foodCurrentAmount += mushroom.HealValue;
+        //    if (foodCurrentAmount > maximum)
+        //    {
+        //        foodCurrentAmount = maximum;
+        //    }
+        //    Debug.Log(foodCurrentAmount);
+        //    //need put a delay for the animator cause it stops immediately
+        //    //no proximity check atm
+        //    player.PlayerAnim.SetBool("IsGathering", false);
+        //}
 
         foodPercentage = ((int)(foodCurrentAmountPercentage * 100f));
         waterPercentage = ((int)(waterCurrentAmountPercentage * 100f));
@@ -95,9 +98,22 @@ public class VitalStats : MonoBehaviour
         foodfill.fillAmount = foodCurrentAmountPercentage;
         waterfillText.text = (waterPercentage + "%");
         waterfill.fillAmount = waterCurrentAmountPercentage;
-        Debug.Log("to food" + foodCurrentAmount);
-        Debug.Log("to water" + waterCurrentAmount);
+        //Debug.Log("to food" + foodCurrentAmount);
+        //Debug.Log("to water" + waterCurrentAmount);
         player.StatusSystem(foodCurrentAmount, waterCurrentAmount, hpCurrentAmount);
+    }
+
+    public void Eat(float hungerGain, float thirstGain) {
+        Debug.Log("Before eating" + foodCurrentAmount);
+        foodCurrentAmount += hungerGain;
+        waterCurrentAmount += thirstGain;
+        if (foodCurrentAmount > maximum) {
+            foodCurrentAmount = maximum;
+        }
+        if(waterCurrentAmount > maximum) {
+            waterCurrentAmount = maximum;
+        }
+        Debug.Log("After eating" + foodCurrentAmount);
     }
 
 }
