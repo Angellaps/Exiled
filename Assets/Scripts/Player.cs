@@ -27,7 +27,6 @@ public class Player : MonoBehaviour , IDamage
     EnemyRangedScript RangedEnemy;
     //Player stats
     public float PlayerLife;
-    float PlayerSanity = 100f;
     float PlayerHunger;
     float PlayerThirst;
     float AttackTimer = 1.0f;
@@ -62,6 +61,7 @@ public class Player : MonoBehaviour , IDamage
 
     void PlayerMovement()
     {
+        //needed for sleep delay
         if (sleepDone.canmove == true)
         {
             float XDir = Input.GetAxis("Horizontal");
@@ -140,9 +140,9 @@ public class Player : MonoBehaviour , IDamage
     }
     public void StatusSystem(float hunger, float thirst, float hp)
     {
+        //works in accordance with VitalStats script to calculate player hunger,thrist,life
         hp = GetComponent<VitalStats>().hpCurrentAmount;
         PlayerLife = hp;
-        //player status such as Life , Hunger , Water
     }
     #region unimplemented Gather
     //void GatherResources()

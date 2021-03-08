@@ -15,7 +15,6 @@ public class AnimationSounds : MonoBehaviour
 
     private void WalkSound()
     {
-        //AnimSoundSrc.Play();
         AudioSource.PlayClipAtPoint(walkClip, transform.position);
     }
 
