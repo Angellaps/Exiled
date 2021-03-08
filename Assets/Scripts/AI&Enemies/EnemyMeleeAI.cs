@@ -104,7 +104,7 @@ public class EnemyMeleeAI: MonoBehaviour , IDamage
         Collider[] HitCollisions = Physics.OverlapSphere(transform.position, AttackRadius);
         foreach (var player in HitCollisions)
         {
-            Debug.Log(player.name);
+        
             if (player.CompareTag("Player"))
             {
                 if (HaveAttacked == false)
