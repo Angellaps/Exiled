@@ -27,7 +27,7 @@ public class EnemyScript : MonoBehaviour
         if (EnemyLife<=0)
         {
             Monsterloot.GenerateLoot();
-            player.interactablesInRange.Remove(this.gameObject);
+            player.enemiesInRange.Remove(this.gameObject);
             Destroy(gameObject);
         }
     }

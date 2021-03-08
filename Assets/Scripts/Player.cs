@@ -6,7 +6,7 @@ public class Player : MonoBehaviour , IDamage
 {
     public List<GameObject> interactablesInRange = new List<GameObject>();
     public List<GameObject> consumablesInRange = new List<GameObject>();
-    List<GameObject> enemiesInRange = new List<GameObject>();
+    public  List<GameObject> enemiesInRange = new List<GameObject>();
     [SerializeField]
     List<GameObject> enemiesInFront = new List<GameObject>();
     public float PlayerDamage = 10.0f;
@@ -112,14 +112,17 @@ public class Player : MonoBehaviour , IDamage
             }
             ///!!!! REWORK ENEMY SCRIPTS TO HAVE A UNIVERSAL TAKE DAMAGE METHOD
             foreach (GameObject enemy in EnemiesInFront(enemiesInRange))
-            {          
-                //Placeholder mexri na katharisei ta scripts twn enemies o thodoris
-                if (enemy.GetComponent<EnemyScript>()!= null)
+            {
+                if (enemy!=null)
                 {
-                    Debug.Log("I dealt damage");               
-                    enemy.GetComponent<EnemyScript>().TakeDamage();
-                    //enemy.GetComponent<EnemyMeleeAI>().TakeDamage();
-                }                
+                    //Placeholder mexri na katharisei ta scripts twn enemies o thodoris
+                    if (enemy.GetComponent<EnemyScript>() != null)
+                    {
+                        Debug.Log("I dealt damage");
+                        enemy.GetComponent<EnemyScript>().TakeDamage();
+                        //enemy.GetComponent<EnemyMeleeAI>().TakeDamage();
+                    }
+                }   
             }
         }
         else
@@ -238,10 +241,13 @@ public class Player : MonoBehaviour , IDamage
     {
         foreach (GameObject enemy in enemiesInRange)
         {
-            if ((transform.InverseTransformPoint(enemy.transform.position).z) > 0.0f)
+            if (enemy != null && !enemiesInFront.Contains(enemy))
             {
-                enemiesInFront.Add(enemy);
-            }
+                if ((transform.InverseTransformPoint(enemy.transform.position).z) > 0.0f)
+                {
+                    enemiesInFront.Add(enemy);
+                }
+            }  
         }
         return enemiesInFront;
     }
