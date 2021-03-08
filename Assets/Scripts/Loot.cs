@@ -19,13 +19,18 @@ public class Loot : MonoBehaviour {
 
 
     void OnCollisionEnter(Collision col) {
+        //If loot items touch the player, they get destroyed but added to the playerInventory.
+        //Food items are an exception since they apply healing and raise survival stats instantly.
         if (col.collider.Equals(playerCol)) {
             AudioSource.PlayClipAtPoint(lootClip, transform.position);
-            playerInventory.AddItem(GetComponent<Item>().item, GetComponent<Item>().amount);
-            //fix for now cause the UI scripts suck ASS
-            if(this.GetComponent<Food>() != null) {                
+            if (this.GetComponent<Food>() == null) {
+                playerInventory.AddItem(GetComponent<Item>().item, GetComponent<Item>().amount);
+            }            
+            if(this.GetComponent<Food>() != null) {
+                //UI was a bit scuffed. Apparently all UI elements had a VitalStats script?
+                //Fixed it with applying changes to all of them instead of trying to find the correct one.
                 foreach(VitalStats meme in FindObjectsOfType<VitalStats>()) {
-                    meme.Eat(GetComponent<Food>().hungerGainAmount, GetComponent<Food>().thirstGainAmount);
+                    meme.Eat(GetComponent<Food>().hungerGainAmount, GetComponent<Food>().thirstGainAmount, GetComponent<Food>().healthGainAmount);
                 }                  
             }
             Destroy(this.gameObject);

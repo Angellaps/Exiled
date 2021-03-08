@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 5049811934669569164}
   - component: {fileID: 1682686678144765104}
   - component: {fileID: 7509697500344418920}
+  - component: {fileID: 3643778410746216833}
   m_Layer: 0
   m_Name: Meat
   m_TagString: Loot
@@ -142,3 +143,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   item: {fileID: 11400000, guid: a8cb14d00e1e0df4c97376de3fac2b0c, type: 2}
   amount: 1
+--- !u!114 &3643778410746216833
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5049372203275626264}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9120ed166ad4c314987275b7ca3215b3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hungerGainAmount: 10
+  thirstGainAmount: 2
+  healthGainAmount: 8

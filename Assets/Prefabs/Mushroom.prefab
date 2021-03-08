@@ -157,3 +157,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hungerGainAmount: 3
   thirstGainAmount: 5
+  healthGainAmount: 2

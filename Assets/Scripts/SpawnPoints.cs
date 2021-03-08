@@ -23,6 +23,8 @@ public class SpawnPoints : MonoBehaviour {
             case SpawnType.Ore:
                 PCGManager.GetComponent<PCGManager>().OreSpawnPoints.Add(this);
                 break;
+            
+            // NOT USED FOR NOW. Spawners are in the Tree spawn points.    
             //case SpawnType.EnemySpawner:
             //    PCGManager.GetComponent<PCGManager>().TreeSpawnPoints.Add(this);
             //    break;

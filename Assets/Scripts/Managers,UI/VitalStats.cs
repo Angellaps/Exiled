@@ -80,17 +80,21 @@ public class VitalStats : MonoBehaviour
         player.StatusSystem(foodCurrentAmount, waterCurrentAmount, hpCurrentAmount);
     }
 
-    public void Eat(float hungerGain, float thirstGain) {
-        Debug.Log("Before eating" + foodCurrentAmount);
+    public void Eat(float hungerGain, float thirstGain, float healthGain) {
+        
         foodCurrentAmount += hungerGain;
         waterCurrentAmount += thirstGain;
+        hpCurrentAmount += healthGain;
         if (foodCurrentAmount > maximum) {
             foodCurrentAmount = maximum;
         }
         if(waterCurrentAmount > maximum) {
             waterCurrentAmount = maximum;
         }
-        Debug.Log("After eating" + foodCurrentAmount);
+        if(hpCurrentAmount > hpMaximum) {
+            hpCurrentAmount = hpMaximum;
+        }
+        
     }
 
 }
